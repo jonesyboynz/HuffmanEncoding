@@ -1,4 +1,5 @@
 #include "Test.h"
+#include "Messages.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -15,11 +16,17 @@ void DestroyTest(Test* test){
 		DestroyTest(test->Next);
 	}
 	free(test);
-	return;
 }
 
-bool RunTest(Test* test){
+bool RunTest(Test* test, uint8_t depth){
+	TestMessageRunning(test->Name, depth);
 	test->Passed = test->TestFunction();
 	test->Run = True;
+	if (test->Passed == True){
+		TestMessagePassed();
+	}
+	else{
+		TestMessageFailed();
+	}
 	return test->Passed;
 }

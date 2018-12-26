@@ -21,6 +21,6 @@ Test* NewTest(char* name, bool (*Function)(void));
 
 void DestroyTest(Test* test);
 
-bool RunTest(Test* test);
+bool RunTest(Test* test, uint8_t depth);
 
 #endif
