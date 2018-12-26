@@ -9,6 +9,7 @@ Rolls the test code into one file
 #include "TestSet.h"
 #include "Execution.h"
 #include "Messages.h"
+#include "Assert.h"
 #include "CoreIncludes.h"
 
 #endif

@@ -1,7 +1,6 @@
+#Compiler macros
 LIBS = -lpthread -lm
-
 CC = gcc -Iinclude -I./src -lm
-
 CFLAGS = -g -Wall --std=gnu99
 
 .PHONY: default all clean
@@ -12,15 +11,28 @@ all: clean huff test
 
 clean: clean_test clean_huff
 
-HUFF_DEPS = Source/Framework/Bool.h Source/Framework/CoreIncludes.h
+HUFF_FRAMEWORK_DEPS = Source/Framework/Bool.h Source/Framework/CoreIncludes.h 
+HUFF_FRAMEWORK_OBJ = 
 
-TEST_DEPS = Test/Framework/CoreIncludes.h Test/Framework/Test.h Test/Framework/TestSet.h Test/Framework/Messages.h Test/Framework/Execution.h Test/Framework/Framework.h
+HUFF_ENCODING_DEPS = Source/Encoding/CharacterFrequencies.h
+HUFF_ENCODING_OBJ = Source/Encoding/CharacterFrequencies.o
+
+HUFF_DECODING_DEPS = 
+HUFF_DECODING_OBJ = 
+
+HUFF_DEPS = $(HUFF_FRAMEWORK_DEPS) $(HUFF_ENCODING_DEPS) $(HUFF_DECODING_DEPS)
+HUFF_OBJ = $(HUFF_FRAMEWORK_OBJ) $(HUFF_ENCODING_OBJ) $(HUFF_DECODING_OBJ)
+
+TEST_FRAMEWORK_DEPS = Test/Framework/CoreIncludes.h Test/Framework/Test.h Test/Framework/TestSet.h Test/Framework/Messages.h Test/Framework/Assert.h Test/Framework/Execution.h Test/Framework/Framework.h
+TEST_FRAMEWORK_OBJ = Test/Framework/Messages.o Test/Framework/Test.o Test/Framework/TestSet.o Test/Framework/Assert.o Test/Framework/Execution.o
+
+TEST_CASE_DEPS = Test/TestCase/CharacterFrequency/Test.h
+TEST_CASE_OBJ = Test/TestCase/CharacterFrequency/Test.o
+
+TEST_DEPS = $(TEST_FRAMEWORK_DEPS) $(TEST_CASE_DEPS) Test/AllTestCases.h
+TEST_OBJ = $(HUFF_OBJ) $(TEST_FRAMEWORK_OBJ) $(TEST_CASE_OBJ)
 
 DEPS = $(HUFF_DEPS) $(TEST_DEPS)
-
-TEST_OBJ = $(HUFF_OBJ) Test/Framework/Messages.o Test/Framework/Test.o Test/Framework/TestSet.o Test/Framework/Execution.o
-
-HUFF_OBJ = 
 
 HUFF_BUILD = Source/main.o $(HUFF_OBJ)
 
@@ -36,9 +48,9 @@ huff: $(HUFF_BUILD)
 	gcc -o $@ $^ $(CFLAGS) $(LIBS)
 
 clean_test:
-	-rm -f Test/*.o
+	-rm -f -R *.o
 	-rm test
 
 clean_huff:
-	-rm -f Source/*.o
+	-rm -f -R *.o
 	-rm huff

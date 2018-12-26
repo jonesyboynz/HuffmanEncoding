@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "AllTestCases.h"
 #include "Framework/Framework.h"
+
+
+#define EXIT_SUCCESS 0
+#define EXIT_FAIL 2
 
 
 bool CanRunFunction(void){
@@ -9,18 +14,25 @@ bool CanRunFunction(void){
 
 int main(int argc, char** argv){
 	
-	//Core test set.
-	TestSet* coreTestSet = NewTestSet("Tests");
+	//Base test set. Parent to all tests and test sets.
+	TestSet* baseTestSet = NewTestSet("Tests");
 
 	//Basic tests.
 	TestSet* basicTestSet = NewTestSet("Basic tests");
-	Test* basicTest = NewTest("Tests can run", CanRunFunction);
+	Test* basicTest = NewTest("Tests can run", CanRunFunction, False);
 	AddTest(basicTestSet, basicTest);
-	AddChildTestSet(coreTestSet, basicTestSet);
+	AddChildTestSet(baseTestSet, basicTestSet);
+
+	//Add test sets
+	AddChildTestSet(baseTestSet, Character_frequency_test_set());
 
 	//Run the tests.
-	if (Execute(coreTestSet) == False){
-		return 2;
+	bool result = Execute(baseTestSet);
+	DestroyTestSet(baseTestSet);
+
+	//Return
+	if (result == False){
+		return EXIT_FAIL;
 	}
-	return 0;
+	return EXIT_SUCCESS;
 }

@@ -11,9 +11,15 @@ TestSet* NewTestSet(const char* name){
 }
 
 void DestroyTestSet(TestSet* testSet){
-	DestroyTestSet(testSet->Next);
-	DestroyTestSet(testSet->ChildSetRoot);
-	DestroyTest(testSet->TestRoot);
+	if (testSet->Next != NULL){
+		DestroyTestSet(testSet->Next);
+	}
+	if (testSet->ChildSetRoot != NULL){
+		DestroyTestSet(testSet->ChildSetRoot);
+	}
+	if (testSet->TestRoot != NULL){
+		DestroyTest(testSet->TestRoot);
+	}
 	free(testSet);
 }
 

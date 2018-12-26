@@ -7,6 +7,7 @@ Displays a summary of the failed tests.
 #define EXECUTION_H
 
 #include "TestSet.h"
+#include "Test.h"
 #include "../../Test/Framework/CoreIncludes.h"
 
 bool Execute(TestSet* testSet);

@@ -13,11 +13,12 @@ struct test_s {
 	char Name[TEST_NAME_LENGTH];
 	bool (*TestFunction)(void);
 	bool Run;
+	bool NoAssert; //Test does not assert on error (no fancy message).
 	bool Passed;
 	Test* Next;
 };
 
-Test* NewTest(char* name, bool (*Function)(void));
+Test* NewTest(char* name, bool (*Function)(void), bool noAssert);
 
 void DestroyTest(Test* test);
 
