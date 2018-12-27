@@ -26,6 +26,21 @@ bool AssertEquals(uint32_t test, uint32_t against){
 	return True;
 }
 
+bool AssertTrue(bool value){
+	if (value != True){
+		printf("[Failed] Value not true.\n");
+	}
+	return value;
+}
+
+bool AssertFalse(bool value){
+	if (value != False){
+		printf("[Failed] Value not false.\n");
+		return False;
+	}
+	return True;
+}
+
 void DisplayBytes(uint8_t* bytes, uint32_t count){
 	printf("[");
 	for (uint32_t i = 0; i < count; i++){

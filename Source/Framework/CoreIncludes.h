@@ -7,5 +7,6 @@ Core functionality for the project.
 
 #include <stdint.h>
 #include "Bool.h"
+#include "Constants.h"
 
 #endif

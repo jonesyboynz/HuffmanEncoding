@@ -1,4 +1,5 @@
 #include "CharacterFrequencies.h"
+#include "../Framework/CoreIncludes.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -6,7 +7,7 @@
 
 uint8_t* CharacterFrequency(FILE* openFile){
 	uint8_t buffer[FILE_READ_BUFFER_SIZE]; //Buffer for file reads.
-	uint8_t* array = calloc(CHARACTER_SET_LENGTH, sizeof(uint8_t));
+	uint8_t* array = calloc(SYSTEM_SYMBOL_COUNT, sizeof(uint8_t));
 
 	//loop over the file.
 	size_t bytes_read = fread(buffer, sizeof(uint8_t), FILE_READ_BUFFER_SIZE, openFile);

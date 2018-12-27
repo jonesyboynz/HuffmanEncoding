@@ -11,8 +11,8 @@ all: clean huff test
 
 clean: clean_test clean_huff
 
-HUFF_FRAMEWORK_DEPS = Source/Framework/Bool.h Source/Framework/CoreIncludes.h 
-HUFF_FRAMEWORK_OBJ = 
+HUFF_FRAMEWORK_DEPS = Source/Framework/Bool.h Source/Framework/Constants.h Source/Framework/CoreIncludes.h Source/Framework/HuffTreeNode.h
+HUFF_FRAMEWORK_OBJ = Source/Framework/HuffTreeNode.c
 
 HUFF_ENCODING_DEPS = Source/Encoding/CharacterFrequencies.h
 HUFF_ENCODING_OBJ = Source/Encoding/CharacterFrequencies.o
@@ -26,8 +26,8 @@ HUFF_OBJ = $(HUFF_FRAMEWORK_OBJ) $(HUFF_ENCODING_OBJ) $(HUFF_DECODING_OBJ)
 TEST_FRAMEWORK_DEPS = Test/Framework/CoreIncludes.h Test/Framework/Test.h Test/Framework/TestSet.h Test/Framework/Messages.h Test/Framework/Assert.h Test/Framework/Execution.h Test/Framework/Framework.h
 TEST_FRAMEWORK_OBJ = Test/Framework/Messages.o Test/Framework/Test.o Test/Framework/TestSet.o Test/Framework/Assert.o Test/Framework/Execution.o
 
-TEST_CASE_DEPS = Test/TestCase/CharacterFrequency/Test.h
-TEST_CASE_OBJ = Test/TestCase/CharacterFrequency/Test.o
+TEST_CASE_DEPS = Test/TestCase/CharacterFrequency/Test.h Test/TestCase/HuffTree/Test.h
+TEST_CASE_OBJ = Test/TestCase/CharacterFrequency/Test.o Test/TestCase/HuffTree/Test.o
 
 TEST_DEPS = $(TEST_FRAMEWORK_DEPS) $(TEST_CASE_DEPS) Test/AllTestCases.h
 TEST_OBJ = $(HUFF_OBJ) $(TEST_FRAMEWORK_OBJ) $(TEST_CASE_OBJ)

@@ -25,6 +25,7 @@ int main(int argc, char** argv){
 
 	//Add test sets
 	AddChildTestSet(baseTestSet, Character_frequency_test_set());
+	AddChildTestSet(baseTestSet, Huffman_tree_test_set());
 
 	//Run the tests.
 	bool result = Execute(baseTestSet);

@@ -6,5 +6,6 @@ Pulls all the test cases into a file.
 #define ALL_TEST_CASES_H
 
 #include "TestCase/CharacterFrequency/Test.h"
+#include "TestCase/HuffTree/Test.h"
 
 #endif
