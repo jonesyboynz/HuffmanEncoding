@@ -7,7 +7,10 @@ Function for calculating the frequencies of each character in a file.
 
 #include <stdio.h>
 #include <stdint.h>
+#include "../Framework/Framework.h"
 
-uint8_t* CharacterFrequency(FILE* openFile);
+uint32_t* CharacterFrequency(FILE* openFile);
+
+HuffHeap* GetHeapFromFrequencies(uint32_t* frequencies);
 
 #endif

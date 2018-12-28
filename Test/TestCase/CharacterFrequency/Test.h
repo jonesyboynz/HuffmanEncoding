@@ -9,8 +9,4 @@ Tests the character frrequency module
 
 TestSet* Character_frequency_test_set();
 
-bool Character_frequency_test1();
-
-bool Character_frequency_test2();
-
 #endif

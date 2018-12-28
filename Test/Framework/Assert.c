@@ -11,6 +11,7 @@ bool AssertBytesMatch(void* test, void* against, uint32_t count){
 			printf("got: ");
 			DisplayBytes(test_array, count);
 			printf(".\n");
+			fflush(NULL);
 			return False;
 		}
 	}
@@ -21,6 +22,7 @@ bool AssertEquals(uint32_t test, uint32_t against){
 	if (test != against){
 		printf("[Failed] Expected: %d ", against);
 		printf("got: %d.\n", test);
+		fflush(NULL);
 		return False;
 	}
 	return True;
@@ -29,6 +31,7 @@ bool AssertEquals(uint32_t test, uint32_t against){
 bool AssertTrue(bool value){
 	if (value != True){
 		printf("[Failed] Value not true.\n");
+		fflush(NULL);
 	}
 	return value;
 }
@@ -36,6 +39,7 @@ bool AssertTrue(bool value){
 bool AssertFalse(bool value){
 	if (value != False){
 		printf("[Failed] Value not false.\n");
+		fflush(NULL);
 		return False;
 	}
 	return True;
@@ -50,4 +54,5 @@ void DisplayBytes(uint8_t* bytes, uint32_t count){
 		}
 	}
 	printf("]");
+	fflush(NULL);
 }

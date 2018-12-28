@@ -3,16 +3,11 @@
 #include "AllTestCases.h"
 #include "Framework/Framework.h"
 
-
-#define EXIT_SUCCESS 0
-#define EXIT_FAIL 2
-
-
 bool CanRunFunction(void){
 	return True;
 }
 
-int main(int argc, char** argv){
+int main(int argc, char **argv){
 	
 	//Base test set. Parent to all tests and test sets.
 	TestSet* baseTestSet = NewTestSet("Tests");
@@ -23,9 +18,12 @@ int main(int argc, char** argv){
 	AddTest(basicTestSet, basicTest);
 	AddChildTestSet(baseTestSet, basicTestSet);
 
-	//Add test sets
-	AddChildTestSet(baseTestSet, Character_frequency_test_set());
+	//Add framework test sets.
 	AddChildTestSet(baseTestSet, Huffman_tree_test_set());
+	AddChildTestSet(baseTestSet, Huffman_heap_test_set());
+
+	//Add encoding test sets.
+	AddChildTestSet(baseTestSet, Character_frequency_test_set());
 
 	//Run the tests.
 	bool result = Execute(baseTestSet);

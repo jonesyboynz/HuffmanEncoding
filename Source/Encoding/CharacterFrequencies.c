@@ -1,13 +1,12 @@
 #include "CharacterFrequencies.h"
-#include "../Framework/CoreIncludes.h"
 #include <stdlib.h>
 #include <stdio.h>
 
 #define FILE_READ_BUFFER_SIZE 1024
 
-uint8_t* CharacterFrequency(FILE* openFile){
+uint32_t* CharacterFrequency(FILE* openFile){
 	uint8_t buffer[FILE_READ_BUFFER_SIZE]; //Buffer for file reads.
-	uint8_t* array = calloc(SYSTEM_SYMBOL_COUNT, sizeof(uint8_t));
+	uint32_t* array = calloc(SYSTEM_SYMBOL_COUNT, sizeof(uint32_t));
 
 	//loop over the file.
 	size_t bytes_read = fread(buffer, sizeof(uint8_t), FILE_READ_BUFFER_SIZE, openFile);
@@ -19,4 +18,15 @@ uint8_t* CharacterFrequency(FILE* openFile){
 	}
 
 	return array;
+}
+
+HuffHeap* GetHeapFromFrequencies(uint32_t* frequencies){
+	HuffHeap* heap = NewHuffHeap();
+	for(uint16_t i = 0; i < SYSTEM_SYMBOL_COUNT; i++){
+		if (frequencies[i] > 0){
+			HuffNode* node = NewHuffNode((uint8_t) i, frequencies[i]);
+			Add(heap, node);
+		}
+	}
+	return heap;
 }

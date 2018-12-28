@@ -8,10 +8,18 @@ bool Is_leaf_test1();
 
 bool Is_leaf_test2();
 
-TestSet* Huffman_tree_test_set(){
-	TestSet* set = NewTestSet("Huffman tree node");
+TestSet* Huffman_node_test_set();
+
+TestSet* Huffman_node_test_set(){
+	TestSet* set = NewTestSet("Node tests");
 	AddTest(set, NewTest("Is leaf works on leaf nodes", Is_leaf_test1, False));
 	AddTest(set, NewTest("Is leaf works on parent nodes", Is_leaf_test2, False));
+	return set;	
+}
+
+TestSet* Huffman_tree_test_set(){
+	TestSet* set = NewTestSet("Huffman tree tests");
+	AddChildTestSet(set, Huffman_node_test_set());
 	return set;
 }
 
