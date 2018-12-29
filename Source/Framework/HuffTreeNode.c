@@ -1,10 +1,9 @@
 #include "HuffTreeNode.h"
-#include <stdlib.h>
 
-HuffNode* NewHuffNode(uint8_t character, uint32_t frequency){
-	HuffNode* newNode = calloc(1, sizeof(NewHuffNode));
+HuffNode* NewHuffNode(uint8_t character, Frequency frequency){
+	HuffNode* newNode = calloc(1, sizeof(HuffNode));
 	newNode->Character = character;
-	newNode->Frequency = frequency;
+	newNode->Freq = frequency;
 	return newNode;
 }
 
@@ -13,4 +12,14 @@ bool IsLeaf(HuffNode* node){
 		return True;
 	}
 	return False;
+}
+
+void Destory(HuffNode* node){
+	if (node->Left != NULL){
+		Destory(node->Left);
+	}
+	if (node->Right != NULL){
+		Destory(node->Right);
+	}
+	free(node);
 }

@@ -1,5 +1,6 @@
 /*
 Rolls all the core functionality into one file.
+This allows the framework to be exposed EXTERNALLY
 */
 
 #ifndef HUFF_FRAMEWORK_H
@@ -10,5 +11,7 @@ Rolls all the core functionality into one file.
 #include "HuffTree.h"
 #include "HuffNodeHeap.h"
 #include "Messages.h"
+#include "Symbol.h"
+#include "BitArray.h"
 
 #endif

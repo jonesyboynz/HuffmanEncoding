@@ -7,6 +7,6 @@ Tests the huffman tree
 
 #include "../../Framework/Framework.h"
 
-TestSet* Huffman_tree_test_set();
+TestSet* Huffman_tree_test_sets();
 
 #endif

@@ -11,8 +11,10 @@ all: clean huff test
 
 clean: clean_test clean_huff
 
-HUFF_FRAMEWORK_DEPS = Source/Framework/Bool.h Source/Framework/Constants.h Source/Framework/Messages.h Source/Framework/CoreIncludes.h Source/Framework/HuffTreeNode.h Source/Framework/HuffTree.h Source/Framework/HuffNodeHeap.h Source/Framework/Framework.h
-HUFF_FRAMEWORK_OBJ = Source/Framework/Messages.o Source/Framework/HuffTreeNode.o Source/Framework/HuffTree.o Source/Framework/HuffNodeHeap.o
+HUFF_FRAMEWORK_CORE_DEPS = Source/Framework/Bool.h Source/Framework/Constants.h Source/Framework/CoreIncludes.h
+
+HUFF_FRAMEWORK_DEPS = Source/Framework/BitArray.h Source/Framework/Messages.h Source/Framework/HuffTreeNode.h Source/Framework/HuffTree.h Source/Framework/HuffNodeHeap.h Source/Framework/Symbol.h Source/Framework/Framework.h
+HUFF_FRAMEWORK_OBJ =  Source/Framework/BitArray.o Source/Framework/Messages.o Source/Framework/HuffTreeNode.o Source/Framework/HuffTree.o Source/Framework/HuffNodeHeap.o Source/Framework/Symbol.o
 
 HUFF_ENCODING_DEPS = Source/Encoding/CharacterFrequencies.h
 HUFF_ENCODING_OBJ = Source/Encoding/CharacterFrequencies.o
@@ -20,16 +22,18 @@ HUFF_ENCODING_OBJ = Source/Encoding/CharacterFrequencies.o
 HUFF_DECODING_DEPS = 
 HUFF_DECODING_OBJ = 
 
-HUFF_DEPS = $(HUFF_FRAMEWORK_DEPS) $(HUFF_ENCODING_DEPS) $(HUFF_DECODING_DEPS)
+HUFF_DEPS = $(HUFF_FRAMEWORK_CORE_DEPS) $(HUFF_FRAMEWORK_DEPS) $(HUFF_ENCODING_DEPS) $(HUFF_DECODING_DEPS)
 HUFF_OBJ = $(HUFF_FRAMEWORK_OBJ) $(HUFF_ENCODING_OBJ) $(HUFF_DECODING_OBJ)
 
-TEST_FRAMEWORK_DEPS = Test/Framework/CoreIncludes.h Test/Framework/Test.h Test/Framework/TestSet.h Test/Framework/Messages.h Test/Framework/Assert.h Test/Framework/Execution.h Test/Framework/Framework.h
-TEST_FRAMEWORK_OBJ = Test/Framework/Messages.o Test/Framework/Test.o Test/Framework/TestSet.o Test/Framework/Assert.o Test/Framework/Execution.o
+TEST_FRAMEWORK_CORE_DEPS = Test/Framework/CoreIncludes.h
 
-TEST_CASE_DEPS = Test/TestCase/CharacterFrequency/Test.h Test/TestCase/HuffTree/Test.h Test/TestCase/HuffHeap/Test.h
-TEST_CASE_OBJ = Test/TestCase/CharacterFrequency/Test.o Test/TestCase/HuffTree/Test.o Test/TestCase/HuffHeap/Test.o
+TEST_FRAMEWORK_DEPS = Test/Framework/Messages.h Test/Framework/Test.h Test/Framework/TestSet.h Test/Framework/Assert.h Test/Framework/Execution.h Test/Framework/Framework.h
+TEST_FRAMEWORK_OBJ =  Test/Framework/Messages.o Test/Framework/Test.o Test/Framework/TestSet.o Test/Framework/Assert.o Test/Framework/Execution.o
 
-TEST_DEPS = $(TEST_FRAMEWORK_DEPS) $(TEST_CASE_DEPS) Test/AllTestCases.h
+TEST_CASE_DEPS = Test/TestCase/CharacterFrequency/Test.h Test/TestCase/HuffTree/Test.h Test/TestCase/HuffHeap/Test.h Test/TestCase/BitArray/Test.h
+TEST_CASE_OBJ = Test/TestCase/CharacterFrequency/Test.o Test/TestCase/HuffTree/Test.o Test/TestCase/HuffHeap/Test.o Test/TestCase/BitArray/Test.o
+
+TEST_DEPS = $(TEST_FRAMEWORK_CORE_DEPS) $(TEST_FRAMEWORK_DEPS) $(TEST_CASE_DEPS) Test/AllTestCases.h
 TEST_OBJ = $(HUFF_OBJ) $(TEST_FRAMEWORK_OBJ) $(TEST_CASE_OBJ)
 
 DEPS = $(HUFF_DEPS) $(TEST_DEPS)
@@ -48,9 +52,9 @@ huff: $(HUFF_BUILD)
 	gcc -o $@ $^ $(CFLAGS) $(LIBS)
 
 clean_test:
-	-rm -f -R *.o
+	-find . -name '*.o' -delete
 	-rm test
 
 clean_huff:
-	-rm -f -R *.o
+	-find . -name '*.o' -delete
 	-rm huff

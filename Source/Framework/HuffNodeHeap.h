@@ -21,8 +21,8 @@ HuffHeap* NewHuffHeap();
 
 bool Add(HuffHeap* heap, HuffNode* node);
 
-void FlowUp(HuffHeap* heap, uint16_t index);
-
 void DestroyHeapAndAllNodes(HuffHeap* heap);
+
+HuffNode* Remove(HuffHeap* heap);
 
 #endif

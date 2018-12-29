@@ -7,6 +7,6 @@ Core functionality for the test framework.
 
 #define TEST_NAME_LENGTH 50
 
-#include "../../Source/Framework/CoreIncludes.h"
+#include "../../Source/Framework/Framework.h"
 
 #endif

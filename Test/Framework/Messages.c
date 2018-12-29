@@ -41,12 +41,12 @@ void ExecutionNoTests(){
 }
 
 void ExecutionAllPassed(){
-	printf("\nAll tests passed.\n");
+	printf("\nAll tests passed (100%%).\n");
 	fflush(NULL);
 }
 
-void ExecutionTestsFailed(uint32_t failed){
-	printf("\nError! %d test(s) failed.\n", failed);
+void ExecutionTestsFailed(uint32_t failed, float percentage){
+	printf("\nError! %d test(s) failed (%f%%).\n", failed, percentage);
 	fflush(NULL);	
 }
 

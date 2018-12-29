@@ -28,6 +28,25 @@ bool AssertEquals(uint32_t test, uint32_t against){
 	return True;
 }
 
+bool AssertSamePointer(void* test, void* against){
+	if (test != against){
+		printf("[Failed] Expected: %p ", against);
+		printf("got: %p.\n", test);
+		fflush(NULL);
+		return False;
+	}
+	return True;
+}
+
+bool AssertNotNull(void* test){
+	if (test == NULL){
+		printf("[Failed] Pointer should not be NULL");
+		fflush(NULL);
+		return False;
+	}
+	return True;	
+}
+
 bool AssertTrue(bool value){
 	if (value != True){
 		printf("[Failed] Value not true.\n");

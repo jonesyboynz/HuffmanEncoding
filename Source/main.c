@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Framework/Framework.h"
+#include "Encoding/CharacterFrequencies.h"
 
 
 int main(int argc, char **argv){
@@ -11,18 +12,23 @@ int main(int argc, char **argv){
 
 	FILE* input;
 	FILE* output;
+	char* inputFilename;
+	char* outputFilename;
 
 	//Open input file.
-	input = fopen(argv[1], "rb");
+	inputFilename = argv[1];
+	input = fopen(inputFilename, "rb");
 
 	//Check the input file.
 	if (ferror(input) != 0){
+		UnableToOpenInputMessage(inputFilename);
 		return EXIT_FAIL;
 	}
 
 	//Open output file.
 	if(argc == 3){
-		output = fopen(argv[2], "wb");
+		outputFilename = argv[2];
+		output = fopen(outputFilename, "wb");
 	}
 	else{
 		//TODO : needs a custom file name.
@@ -32,15 +38,25 @@ int main(int argc, char **argv){
 
 	//Check the output file.
 	if (ferror(output) != 0){
+		UnableToOpenOutputMessage(outputFilename);
 		fclose(input);
 		return EXIT_FAIL;
 	}
 
-	//character frequencies
+	//Character frequencies
+	Frequency* frequencies = CharacterFrequency(input);
 
-	//get heap
+	//Get heap
+	HuffHeap* heap = GetHeapFromFrequencies(frequencies);
 
-	//get symbols
+	/*for (uint16_t i = 1; i < heap->Count + 1; i++){
+		printf("Node[%d]: C: %c F: %d\n", i, heap->Heap[i]->Character, (uint64_t) heap->Heap[i]->Freq);
+	}*/
+
+	//Create huffman tree.
+	GenerateTreeWithinHeap(heap);
+
+	//get symbols 
 
 	//convert symbols to table & write
 
@@ -51,6 +67,8 @@ int main(int argc, char **argv){
 	//Cleanup
 	fclose(input);
 	fclose(output);
+	free(frequencies);
+	DestroyHeapAndAllNodes(heap);
 
 	return EXIT_SUCCESS;
 }

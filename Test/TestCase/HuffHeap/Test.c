@@ -17,6 +17,10 @@ bool Test_heap_max_size();
 
 bool Test_heap_over_size();
 
+bool Test_deletion();
+
+bool Test_deletion_when_heap_empty();
+
 TestSet* Huffman_heap_test_set(){
 	TestSet* set = NewTestSet("Heap tests");
 	AddTest(set, NewTest("Can create heap", Test_heap_creation, False));
@@ -25,6 +29,8 @@ TestSet* Huffman_heap_test_set(){
 	AddTest(set, NewTest("Size is correct", Test_heap_size, False));
 	AddTest(set, NewTest("Size is correct at the maximum size", Test_heap_max_size, False));
 	AddTest(set, NewTest("Size is correct when inserting above maximum size", Test_heap_over_size, False));
+	AddTest(set, NewTest("Can delete nodes", Test_deletion, True));
+	AddTest(set, NewTest("Cannot delete on empty heap", Test_deletion_when_heap_empty, True));
 	return set;	
 }
 
@@ -95,5 +101,28 @@ bool Test_heap_over_size(){
 	result &= AssertEquals(heap->Count, SYSTEM_SYMBOL_COUNT);
 	free(heap);
 	free(node);
+	return result;
+}
+
+bool Test_deletion(){
+	HuffHeap* heap = NewHuffHeap();
+	HuffNode* node1 = NewHuffNode(0x48, 1); //72
+	HuffNode* node2 = NewHuffNode(0x49, 2); //73
+	HuffNode* node3 = NewHuffNode(0x50, 3); //80
+	Add(heap, node3);
+	Add(heap, node2);
+	Add(heap, node1);
+	HuffNode* node = Remove(heap);
+	bool result = AssertEquals(node->Character, 0x48);
+	result &= AssertEquals(heap->Heap[1]->Character, 0x49);
+	free(heap);
+	free(node1); free(node2); free(node3);
+	return result;
+}
+
+bool Test_deletion_when_heap_empty(){
+	HuffHeap* heap = NewHuffHeap();
+	bool result = AssertSamePointer(Remove(heap), NULL);
+	free(heap);
 	return result;
 }

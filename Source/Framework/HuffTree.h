@@ -1,13 +1,16 @@
 /*
-Huffman tree methods
+Methods for constructing the huffman tree within the heap.
 */
 
 #ifndef HUFF_TREE_H
 #define HUFF_TREE_H
 
-#include "CoreIncludes.h"
-#include "HuffTreeNode.h"
+#include "HuffNodeHeap.h"
 
-//method for constructing tree from a heap
+void GenerateTreeWithinHeap(HuffHeap* heap);
+
+uint16_t Count(HuffNode* node);
+
+uint16_t LeafCount(HuffNode* node);
 
 #endif

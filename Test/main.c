@@ -19,8 +19,10 @@ int main(int argc, char **argv){
 	AddChildTestSet(baseTestSet, basicTestSet);
 
 	//Add framework test sets.
-	AddChildTestSet(baseTestSet, Huffman_tree_test_set());
+	AddChildTestSet(baseTestSet, Huffman_tree_test_sets());
 	AddChildTestSet(baseTestSet, Huffman_heap_test_set());
+	AddChildTestSet(baseTestSet, Huffman_heap_test_set());
+	AddChildTestSet(baseTestSet, Bit_array_test_set());
 
 	//Add encoding test sets.
 	AddChildTestSet(baseTestSet, Character_frequency_test_set());
