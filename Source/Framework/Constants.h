@@ -25,6 +25,9 @@ System constants
 #define BIT1 0x01
 #define BIT_ERROR 0xFF
 
+//Bytes
+#define BYTE_ERROR 0xFF
+
 //Exit statuses.
 #define EXIT_SUCCESS 0
 #define EXIT_FAIL 2
