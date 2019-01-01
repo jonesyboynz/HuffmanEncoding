@@ -49,16 +49,12 @@ int main(int argc, char **argv){
 	//Get heap
 	HuffHeap* heap = GetHeapFromFrequencies(frequencies);
 
-	/*for (uint16_t i = 1; i < heap->Count + 1; i++){
-		printf("Node[%d]: C: %c F: %d\n", i, heap->Heap[i]->Character, (uint64_t) heap->Heap[i]->Freq);
-	}*/
-
 	//Create huffman tree.
 	GenerateTreeWithinHeap(heap);
 
-	//get symbols 
-
-	//convert symbols to table & write
+	//get symbol table 
+	SymbolTable* table = GenerateEncodingSymbols(heap->Heap[HEAP_ROOT_INDEX]);
+	DISPLAY_SYMBOL_TABLE_DEF(table);
 
 	//convert file to symbols & write
 
@@ -69,6 +65,7 @@ int main(int argc, char **argv){
 	fclose(output);
 	free(frequencies);
 	DestroyHeapAndAllNodes(heap);
+	DestroySymbolTable(table);
 
 	return EXIT_SUCCESS;
 }

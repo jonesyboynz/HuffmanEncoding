@@ -25,8 +25,8 @@ void TestSetMessageRunning(char* name, uint8_t depth){
 
 void TestSetMessageSummary(uint32_t passed, uint32_t failed, uint8_t depth){
 	DisplayDepth(depth);
-	printf("Set complete: Passed %d, ", passed);
-	printf("Failed %d\n", failed);
+	printf("*** Set complete: Passed %d, ", passed);
+	printf("Failed %d ***\n", failed);
 	fflush(NULL);
 }
 
@@ -45,8 +45,8 @@ void ExecutionAllPassed(){
 	fflush(NULL);
 }
 
-void ExecutionTestsFailed(uint32_t failed, float percentage){
-	printf("\nError! %d test(s) failed (%f%%).\n", failed, percentage);
+void ExecutionTestsFailed(uint32_t ran, uint32_t failed, float percentage){
+	printf("\nError! Ran %d test(s) and %d failed (%f%%).\n", ran, failed, percentage);
 	fflush(NULL);	
 }
 

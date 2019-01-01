@@ -14,7 +14,8 @@ bool Execute(TestSet* testSet){
 		uint32_t failedTests = TotalTestsFailed(siblingSet);
 		uint32_t totalTests = TotalTestsCount(siblingSet);
 		if(failedTests > 0){
-			ExecutionTestsFailed(failedTests,
+			ExecutionTestsFailed(totalTests,
+				failedTests,
 				((float) (totalTests - failedTests)) / ((float) totalTests) * 100.0);
 			allTestsPassed = False;
 		}

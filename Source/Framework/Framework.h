@@ -11,7 +11,11 @@ This allows the framework to be exposed EXTERNALLY
 #include "HuffTree.h"
 #include "HuffNodeHeap.h"
 #include "Messages.h"
-#include "Symbol.h"
 #include "BitArray.h"
+#include "Symbol.h"
+#include "SymbolTable.h"
+#include "FileStream.h"
+#include "ByteArray.h"
+#include "Debug.h"
 
 #endif

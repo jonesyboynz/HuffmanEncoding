@@ -61,7 +61,7 @@ bool RunTestSet(TestSet* testSet, uint8_t depth){
 	uint8_t totalFailed = TotalTestsFailed(testSet);
 	TestSetMessageSummary(totalTests - totalFailed,
 		totalFailed,
-		depth);
+		depth + 1);
 	
 	//Return the overall result of this test set's tests.
 	if (testSet->Passed == testSet->TestCount && allChildTestsPassed == True){

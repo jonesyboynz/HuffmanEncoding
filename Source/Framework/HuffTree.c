@@ -1,4 +1,7 @@
 #include "HuffTree.h"
+#include "SymbolTable.h"
+
+void AddSymbolToTable(SymbolTable* table, HuffNode* node, BitArray* bitArray);
 
 //Converts a tree to a heap.
 void GenerateTreeWithinHeap(HuffHeap* heap){
@@ -29,4 +32,34 @@ uint16_t LeafCount(HuffNode* node){
 		return 1;
 	}
 	return LeafCount(node->Left) + LeafCount(node->Right);
+}
+
+SymbolTable* GenerateEncodingSymbols(HuffNode* node){
+	SymbolTable* table = NewSymbolTable();
+	BitArray* bitArray = NewBitArray(SYSTEM_SYMBOL_MAX_BITS);
+	AddSymbolToTable(table, node, bitArray);
+	return table;
+}
+
+//=============================================================================
+//							PRIVATE METHODS
+//=============================================================================
+
+//Recursively adds symbols to the table
+void AddSymbolToTable(SymbolTable* table, HuffNode* node, BitArray* bitArray){
+	if (IsLeaf(node) == True){
+		//Add symbol.
+		Symbol* symbol = NewSymbol(node->Character, Copy(bitArray));
+		table->Table[node->Character] = symbol;
+	}
+	if (node->Left != NULL){
+		PushBit(bitArray, BIT0);
+		AddSymbolToTable(table, node->Left, bitArray);
+		PopBit(bitArray);
+	}
+	if (node->Right != NULL){
+		PushBit(bitArray, BIT1);
+		AddSymbolToTable(table, node->Right, bitArray);
+		PopBit(bitArray);
+	}
 }

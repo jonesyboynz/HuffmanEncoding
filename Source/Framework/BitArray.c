@@ -1,8 +1,6 @@
 #include "BitArray.h"
 #include <string.h>
 
-size_t BytesForBits(size_t bits);
-
 size_t BitsInBytes(size_t bytes);
 
 size_t ByteIndex(size_t forBit);
@@ -54,12 +52,6 @@ Bit PopBit(BitArray* bitArray){
 	return poppedBit >> shift;
 }
 
-/*
-==============================================================
-					Private Methods
-==============================================================
-*/
-
 size_t BytesForBits(size_t bits){
 	size_t bytes = bits / BITS_IN_BYTE;
 	if (bits % BITS_IN_BYTE != 0){
@@ -67,6 +59,12 @@ size_t BytesForBits(size_t bits){
 	}
 	return bytes;
 }
+
+/*
+==============================================================
+					Private Methods
+==============================================================
+*/
 
 size_t BitsInBytes(size_t bytes){
 	return bytes * BITS_IN_BYTE;

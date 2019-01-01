@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "Test.h"
 #include "../../Framework/Framework.h"
 #include "../../../Source/Encoding/CharacterFrequencies.h"

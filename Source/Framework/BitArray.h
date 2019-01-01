@@ -25,4 +25,6 @@ bool PushBit(BitArray* bitArray, Bit bit);
 
 Bit PopBit(BitArray* bitArray);
 
+size_t BytesForBits(size_t bits);
+
 #endif

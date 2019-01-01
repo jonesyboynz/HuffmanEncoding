@@ -6,11 +6,14 @@ Methods for constructing the huffman tree within the heap.
 #define HUFF_TREE_H
 
 #include "HuffNodeHeap.h"
+#include "SymbolTable.h"
 
 void GenerateTreeWithinHeap(HuffHeap* heap);
 
 uint16_t Count(HuffNode* node);
 
 uint16_t LeafCount(HuffNode* node);
+
+SymbolTable* GenerateEncodingSymbols(HuffNode* node);
 
 #endif

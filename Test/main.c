@@ -1,31 +1,29 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "AllTestCases.h"
+#include "TestCase/All.h"
 #include "Framework/Framework.h"
-
-bool CanRunFunction(void){
-	return True;
-}
 
 int main(int argc, char **argv){
 	
 	//Base test set. Parent to all tests and test sets.
-	TestSet* baseTestSet = NewTestSet("Tests");
+	TestSet* baseTestSet = NewTestSet("All Tests");
 
-	//Basic tests.
-	TestSet* basicTestSet = NewTestSet("Basic tests");
-	Test* basicTest = NewTest("Tests can run", CanRunFunction, False);
-	AddTest(basicTestSet, basicTest);
-	AddChildTestSet(baseTestSet, basicTestSet);
+	//Framework tests.
+	TestSet* frameworkTestSet = NewTestSet("Framework");
+
+	//Encoding tests.
+	TestSet* encodingTestSet = NewTestSet("Encoding");
+
+	AddChildTestSet(baseTestSet, frameworkTestSet);
+	AddChildTestSet(baseTestSet, encodingTestSet);
 
 	//Add framework test sets.
-	AddChildTestSet(baseTestSet, Huffman_tree_test_sets());
-	AddChildTestSet(baseTestSet, Huffman_heap_test_set());
-	AddChildTestSet(baseTestSet, Huffman_heap_test_set());
-	AddChildTestSet(baseTestSet, Bit_array_test_set());
+	AddChildTestSet(frameworkTestSet, Huffman_tree_test_sets());
+	AddChildTestSet(frameworkTestSet, Huffman_heap_test_set());
+	AddChildTestSet(frameworkTestSet, Bit_array_test_set());
+	AddChildTestSet(frameworkTestSet, Symbol_test_set());
+	AddChildTestSet(frameworkTestSet, Byte_array_test_set());
 
 	//Add encoding test sets.
-	AddChildTestSet(baseTestSet, Character_frequency_test_set());
+	AddChildTestSet(encodingTestSet, Character_frequency_test_set());
 
 	//Run the tests.
 	bool result = Execute(baseTestSet);

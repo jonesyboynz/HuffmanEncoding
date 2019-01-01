@@ -29,7 +29,7 @@ void ExecutionNoTests();
 
 void ExecutionAllPassed();
 
-void ExecutionTestsFailed(uint32_t failed, float percentage);
+void ExecutionTestsFailed(uint32_t ran, uint32_t failed, float percentage);
 
 //Other
 
