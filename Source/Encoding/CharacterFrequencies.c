@@ -20,9 +20,10 @@ Frequency* CharacterFrequency(FILE* openFile){
 
 HuffHeap* GetHeapFromFrequencies(Frequency* frequencies){
 	HuffHeap* heap = NewHuffHeap();
+	Add(heap, NewHuffNode(BYTE_UNUSED, SYMBOL_TYOE_EOF, 1)); //Adds the EOF character to the heap first.
 	for(uint16_t i = 0; i < SYSTEM_SYMBOL_COUNT; i++){
 		if (frequencies[i] > 0){
-			HuffNode* node = NewHuffNode((uint8_t) i, frequencies[i]);
+			HuffNode* node = NewHuffNode((uint8_t) i, SYMBOL_TYPE_CHARACTER, frequencies[i]);
 			Add(heap, node);
 		}
 	}

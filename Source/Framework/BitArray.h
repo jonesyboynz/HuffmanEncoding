@@ -21,9 +21,18 @@ void Destroy(BitArray* bitArray);
 
 BitArray* Copy(BitArray* original);
 
+Bit GetBit(BitArray* bitArray, size_t index);
+
+void SetBit(BitArray* bitArray, size_t index, Bit bit);
+
 bool PushBit(BitArray* bitArray, Bit bit);
 
 Bit PopBit(BitArray* bitArray);
+
+void Clear(BitArray* bitArray);
+
+//Returns the number of bits that have been appended.
+size_t Append(BitArray* original, BitArray* appendBits);
 
 size_t BytesForBits(size_t bits);
 

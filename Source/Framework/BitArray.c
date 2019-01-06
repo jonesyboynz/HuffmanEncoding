@@ -28,14 +28,34 @@ BitArray* Copy(BitArray* original){
 	return copy;
 }
 
+Bit GetBit(BitArray* bitArray, size_t index){
+	if (index < 0 || index >= bitArray->Count){
+		return BIT_ERROR;
+	}
+	uint8_t shift = ShiftForBit(bitArray->Count - 1);
+	uint8_t mask = BIT1 << shift;
+	Bit bit = bitArray->Bits[ByteIndex(index)] & mask;
+	return bit;
+}
+
+void SetBit(BitArray* bitArray, size_t index, Bit bit){
+	if (index < 0 || index > bitArray->MaxCount){
+		return;
+	}
+	uint8_t bit_to_add = (bit & BIT_MASK) << ShiftForBit(index);
+	bitArray->Bits[ByteIndex(index)] |= bit_to_add;
+	//Update count
+	if (bitArray->Count < index + 1){
+		bitArray->Count = index + 1;
+	}
+}
+
 bool PushBit(BitArray* bitArray, Bit bit){
 	if (bitArray->Count >= bitArray->MaxCount){
 		return False;
 	}
-	uint8_t bit_to_add = (bit & BIT_MASK) << ShiftForBit(bitArray->Count);
 	//Set the pushed bit.
-	bitArray->Bits[ByteIndex(bitArray->Count)] |= bit_to_add;
-	bitArray->Count += 1;
+	SetBit(bitArray, bitArray->Count, bit);
 	return True;
 }
 
@@ -50,6 +70,25 @@ Bit PopBit(BitArray* bitArray){
 	bitArray->Bits[ByteIndex(bitArray->Count - 1)] &= ~mask;
 	bitArray->Count -= 1;
 	return poppedBit >> shift;
+}
+
+void Clear(BitArray* bitArray){
+	for (size_t i = 0; i < BytesForBits(bitArray->MaxCount); ++i)
+	{
+		bitArray->Bits[i] = 0x00;
+	}
+	bitArray->Count = 0;
+}
+
+size_t Append(BitArray* original, BitArray* appendBits){
+	size_t bitsAppended = 0;
+	for (size_t i = 0; i < appendBits->Count; i++){
+		if (PushBit(original, GetBit(appendBits, i)) == False){
+			return bitsAppended;
+		}
+		bitsAppended += 1;
+	}
+	return bitsAppended;
 }
 
 size_t BytesForBits(size_t bits){

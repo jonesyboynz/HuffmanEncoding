@@ -29,6 +29,7 @@ void DisplayBinary(uint8_t byte, DebugDisplayOptions option){
 void DisplayHuffHeap(HuffHeap* heap, DebugDisplayOptions option){
 	printf("Heap[%p,\n", heap);
 	for (uint16_t i = HEAP_ROOT_INDEX; i < heap->Count + HEAP_ROOT_INDEX; i++){
+		printf("(%d) ", i);
 		DisplayHuffNode(heap->Heap[i], DISPLAY_OPTION_NO_FLUSH);
 	}
 	printf("]");
@@ -66,9 +67,10 @@ void DisplayBitArray(BitArray* array, DebugDisplayOptions option){
 }
 
 void DisplayHuffNode(HuffNode* node, DebugDisplayOptions option){
-	printf("Node[%p, %c, %" PRId64 ", *L:%p, *R:%p]",
+	printf("Node[%p, %c, %02x, %" PRId64 ", *L:%p, *R:%p]",
 		node,
 		node->Character,
+		node->Type,
 		((uint64_t) node->Freq),
 		node->Left,
 		node->Right);

@@ -11,8 +11,8 @@ bool Frequency_to_heap_test();
 
 TestSet* Character_frequency_test_set(){
 	TestSet* set = NewTestSet("Character frequency");
-	AddTest(set, NewTest("Frequencies are correct", Character_frequency_test1, False));
-	AddTest(set, NewTest("Frequencies are correct", Character_frequency_test2, False));
+	AddTest(set, NewTest("Frequencies are correct (1)", Character_frequency_test1, False));
+	AddTest(set, NewTest("Frequencies are correct (2)", Character_frequency_test2, False));
 	AddTest(set, NewTest("Can convert frequencies to heap", Frequency_to_heap_test, False));
 	return set;
 }
@@ -48,8 +48,8 @@ bool Frequency_to_heap_test(){
 	FILE* file = fopen("Test/Data/frequency_test2", "rb");
 	Frequency* frequencies = CharacterFrequency(file);
 	HuffHeap* heap = GetHeapFromFrequencies(frequencies);
-	bool result = AssertEquals(heap->Heap[1]->Character, '.'); //The lowest character codes will be placed on the heap first.
-	result &= AssertEquals(heap->Count, 28);
+	bool result = AssertEquals(heap->Heap[3]->Character, '.'); //The lowest character codes will be placed on the heap first.
+	result &= AssertEquals(heap->Count, 29);
 	result &= AssertEquals(heap->Heap[16]->Character, ' ');
 	DestroyHeapAndAllNodes(heap);
 	return result;

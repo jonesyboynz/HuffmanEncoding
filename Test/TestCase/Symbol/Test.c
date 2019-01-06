@@ -26,14 +26,10 @@ bool Symbol_table_is_correct(){
 	HuffHeap* heap = GetHeapFromFrequencies(frequencies);
 	GenerateTreeWithinHeap(heap);
 	SymbolTable* table = GenerateEncodingSymbols(heap->Heap[1]);
-	bool result = AssertEquals(table->Table['1']->BitArray->Bits[0], 0xC0);
-	result &= AssertEquals(table->Table['2']->BitArray->Bits[0], 0xC8);
-	result &= AssertEquals(table->Table['3']->BitArray->Bits[0], 0xD8);
-	result &= AssertEquals(table->Table['4']->BitArray->Bits[0], 0xD0);
-	result &= AssertEquals(table->Table[':']->BitArray->Bits[0], 0xE0);
-	result &= AssertEquals(table->Table['a']->BitArray->Bits[0], 0x00);
-	result &= AssertEquals(table->Table['c']->BitArray->Bits[0], 0xF0);
-	result &= AssertEquals(table->Table['z']->BitArray->Bits[0], 0x80);
+	bool result = AssertEquals(table->Table['a']->BitArray->Bits[0], 0x80);
+	result &= AssertEquals(table->Table['b']->BitArray->Bits[0], 0x40);
+	result &= AssertEquals(table->Table['c']->BitArray->Bits[0], 0x20);
+	result &= AssertEquals(table->Table[EOF_CHARACTER_VALUE]->BitArray->Bits[0], 0x00);
 	DestroyHeapAndAllNodes(heap);
 	DestroySymbolTable(table);
 	return result;	

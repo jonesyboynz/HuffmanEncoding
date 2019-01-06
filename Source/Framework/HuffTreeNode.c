@@ -1,9 +1,10 @@
 #include "HuffTreeNode.h"
 
-HuffNode* NewHuffNode(uint8_t character, Frequency frequency){
+HuffNode* NewHuffNode(uint8_t character, uint8_t type, Frequency frequency){
 	HuffNode* newNode = calloc(1, sizeof(HuffNode));
 	newNode->Character = character;
 	newNode->Freq = frequency;
+	newNode->Type = type;
 	return newNode;
 }
 

@@ -3,12 +3,12 @@
 
 void AddSymbolToTable(SymbolTable* table, HuffNode* node, BitArray* bitArray);
 
-//Converts a tree to a heap.
+//Converts a heap to a tree.
 void GenerateTreeWithinHeap(HuffHeap* heap){
 	while(heap->Count > 1){
 		HuffNode* left_node = Remove(heap);
 		HuffNode* right_node = Remove(heap);
-		HuffNode* parentNode = NewHuffNode(0x00, left_node->Freq + right_node->Freq);
+		HuffNode* parentNode = NewHuffNode(BYTE_UNUSED, SYMBOL_TYPE_PARENT, left_node->Freq + right_node->Freq);
 		parentNode->Left = left_node;
 		parentNode->Right = right_node;
 		Add(heap, parentNode);
@@ -50,7 +50,12 @@ void AddSymbolToTable(SymbolTable* table, HuffNode* node, BitArray* bitArray){
 	if (IsLeaf(node) == True){
 		//Add symbol.
 		Symbol* symbol = NewSymbol(node->Character, Copy(bitArray));
-		table->Table[node->Character] = symbol;
+		if (node->Type == SYMBOL_TYOE_EOF){
+			table->Table[EOF_CHARACTER_VALUE] = symbol;
+		}
+		else{
+			table->Table[node->Character] = symbol;
+		}	
 	}
 	if (node->Left != NULL){
 		PushBit(bitArray, BIT0);

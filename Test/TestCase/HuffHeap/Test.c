@@ -43,7 +43,7 @@ bool Test_heap_creation(){
 
 bool Test_heap_insertion(){
 	HuffHeap* heap = NewHuffHeap();
-	HuffNode* node = NewHuffNode(0x48, 1);
+	HuffNode* node = NewHuffNode(0x48, SYMBOL_TYPE_CHARACTER, 1);
 	bool result = Add(heap, node);
 	AssertTrue(result);
 	result &= AssertEquals(heap->Heap[1]->Character, node->Character);
@@ -54,9 +54,9 @@ bool Test_heap_insertion(){
 
 bool Test_heap_flow_up(){
 	HuffHeap* heap = NewHuffHeap();
-	HuffNode* node1 = NewHuffNode(0x48, 1); //72
-	HuffNode* node2 = NewHuffNode(0x49, 2); //73
-	HuffNode* node3 = NewHuffNode(0x50, 3); //80
+	HuffNode* node1 = NewHuffNode(0x48, SYMBOL_TYPE_CHARACTER, 1); //72
+	HuffNode* node2 = NewHuffNode(0x49, SYMBOL_TYPE_CHARACTER, 2); //73
+	HuffNode* node3 = NewHuffNode(0x50, SYMBOL_TYPE_CHARACTER, 3); //80
 	bool result = Add(heap, node3);
 	result &= Add(heap, node2);
 	result &= Add(heap, node1);
@@ -71,29 +71,31 @@ bool Test_heap_flow_up(){
 
 bool Test_heap_size(){
 	HuffHeap* heap = NewHuffHeap();
-	HuffNode* node = NewHuffNode(0x48, 1);
+	HuffNode* node = NewHuffNode(0x48, SYMBOL_TYPE_CHARACTER, 1);
 	Add(heap, node); Add(heap, node); Add(heap, node);
 	Add(heap, node); Add(heap, node); Add(heap, node);
 	Add(heap, node); Add(heap, node); Add(heap, node);
+	bool result = AssertEquals(heap->Count, 9);
 	free(heap);
 	free(node);
-	return AssertEquals(heap->Count, 9);
+	return result;
 }
 
 bool Test_heap_max_size(){
 	HuffHeap* heap = NewHuffHeap();
-	HuffNode* node = NewHuffNode(0x48, 1);
+	HuffNode* node = NewHuffNode(0x48, SYMBOL_TYPE_CHARACTER, 1);
 	for (uint16_t i = 0; i < SYSTEM_SYMBOL_COUNT; i++){
 		Add(heap, node);
 	}
+	bool result = AssertEquals(heap->Count, SYSTEM_SYMBOL_COUNT);
 	free(heap);
 	free(node);
-	return AssertEquals(heap->Count, SYSTEM_SYMBOL_COUNT);
+	return result;
 }
 
 bool Test_heap_over_size(){
 	HuffHeap* heap = NewHuffHeap();
-	HuffNode* node = NewHuffNode(0x48, 1);
+	HuffNode* node = NewHuffNode(0x48, SYMBOL_TYPE_CHARACTER, 1);
 	for (uint16_t i = 0; i < SYSTEM_SYMBOL_COUNT; i++){
 		Add(heap, node);
 	}
@@ -106,9 +108,9 @@ bool Test_heap_over_size(){
 
 bool Test_deletion(){
 	HuffHeap* heap = NewHuffHeap();
-	HuffNode* node1 = NewHuffNode(0x48, 1); //72
-	HuffNode* node2 = NewHuffNode(0x49, 2); //73
-	HuffNode* node3 = NewHuffNode(0x50, 3); //80
+	HuffNode* node1 = NewHuffNode(0x48, SYMBOL_TYPE_CHARACTER, 1); //72
+	HuffNode* node2 = NewHuffNode(0x49, SYMBOL_TYPE_CHARACTER, 2); //73
+	HuffNode* node3 = NewHuffNode(0x50, SYMBOL_TYPE_CHARACTER, 3); //80
 	Add(heap, node3);
 	Add(heap, node2);
 	Add(heap, node1);

@@ -6,5 +6,20 @@ Methods for streaming bytes in and out of files.
 #define FILE_STREAM_H
 
 #include "CoreIncludes.h"
+#include "BitArray.h"
+
+typedef struct file_stream_s FileStream;
+
+struct file_stream_s
+{
+	FILE* File;
+	BitArray* Buffer;
+};
+
+FileStream* NewFileStream(FILE* file);
+
+void DestroyFileStream(FileStream* stream);
+
+void PushBits(BitArray* bitArray);
 
 #endif

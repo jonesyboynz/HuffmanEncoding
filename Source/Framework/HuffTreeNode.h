@@ -11,12 +11,13 @@ typedef struct huff_node_s HuffNode;
 
 struct huff_node_s {
 	uint8_t Character;
+	uint8_t Type;
 	Frequency Freq;
 	HuffNode* Left;
 	HuffNode* Right;
 };
 
-HuffNode* NewHuffNode(uint8_t character, Frequency frequency);
+HuffNode* NewHuffNode(uint8_t character, uint8_t type, Frequency frequency);
 
 bool IsLeaf(HuffNode* node);
 
