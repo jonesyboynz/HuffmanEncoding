@@ -18,4 +18,6 @@ SymbolTable* NewSymbolTable();
 
 void DestroySymbolTable(SymbolTable* table);
 
+uint16_t TableCount(SymbolTable* table);
+
 #endif

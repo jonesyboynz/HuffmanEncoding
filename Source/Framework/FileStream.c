@@ -16,8 +16,26 @@ void DestroyFileStream(FileStream* stream){
 	free(stream);
 }
 
-void PushBits(BitArray* bitArray){
+void PushBits(FileStream* stream, BitArray* bitArray){
+	size_t bitsAppended = Append(stream->Buffer, bitArray);
+	if (bitsAppended == bitArray->Count){
+		return;
+	}
+	//Was not able to write all bits. Need to clear the buffer and try again.
+	for (size_t i = bitsAppended; i < bitArray->Count; i++){
+		if (PushBit(stream->Buffer, GetBit(bitArray, i)) == False){
+			FlushBuffer(stream);
+			PushBit(stream->Buffer, GetBit(bitArray, i));
+		}
+	}
+}
 
+//Fill up the current byte and writes the buffer.
+void FinishOutput(FileStream* stream){
+	while (stream->Buffer->Count % BITS_IN_BYTE != 0){
+		PushBits(stream, BIT0);
+	}
+	FlushBuffer(stream);
 }
 
 //======================================================
@@ -25,7 +43,7 @@ void PushBits(BitArray* bitArray){
 //======================================================
 
 void FlushBuffer(FileStream* stream){
-	//Write the buffer to the file and
+	//Write the buffer to the file and then reset it.
 	fwrite(stream->Buffer->Bits, sizeof(Bit), BytesForBits(stream->Buffer->Count), stream->File);
 	Clear(stream->Buffer);	
 }

@@ -24,6 +24,7 @@ int main(int argc, char **argv){
 
 	//Add encoding test sets.
 	AddChildTestSet(encodingTestSet, Character_frequency_test_set());
+	AddChildTestSet(encodingTestSet, Serializer_test_set());
 
 	//Run the tests.
 	bool result = Execute(baseTestSet);

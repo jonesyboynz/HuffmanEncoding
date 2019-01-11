@@ -27,6 +27,8 @@ void SetBit(BitArray* bitArray, size_t index, Bit bit);
 
 bool PushBit(BitArray* bitArray, Bit bit);
 
+size_t PushByteSlice(BitArray* bitArray, uint8_t byte, uint8_t fromIndex, uint8_t upToIndex);
+
 Bit PopBit(BitArray* bitArray);
 
 void Clear(BitArray* bitArray);

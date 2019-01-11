@@ -11,5 +11,6 @@ Pulls all the test cases into a file.
 #include "BitArray/Test.h"
 #include "Symbol/Test.h"
 #include "ByteArray/Test.h"
+#include "Serializer/Test.h"
 
 #endif

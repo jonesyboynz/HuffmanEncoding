@@ -59,6 +59,27 @@ bool PushBit(BitArray* bitArray, Bit bit){
 	return True;
 }
 
+/*
+Pushes a splice of a byte onto the bit array.
+the first bit from the left is treated as index 0.
+Pushed bits will be inclusive of fromIndex and exclusive of upToIndex.
+*/
+size_t PushByteSlice(BitArray* bitArray, uint8_t byte, uint8_t fromIndex, uint8_t upToIndex){
+	size_t bitsAppended = 0;	
+	for (uint8_t i = fromIndex; i < upToIndex; i++){
+		if (i >= 0 && i < BITS_IN_BYTE){
+			Bit bit = BIT0;
+			if ((byte & (1 << (BITS_IN_BYTE - 1 - i))) > 0){
+				bit = BIT1;
+			}
+			if (PushBit(bitArray, bit) == True){
+				bitsAppended += 1;
+			}
+		}
+	}
+	return bitsAppended;
+}
+
 Bit PopBit(BitArray* bitArray){
 	if (bitArray->Count < 1){
 		return BIT_ERROR;

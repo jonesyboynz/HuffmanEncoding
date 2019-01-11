@@ -50,7 +50,7 @@ void DisplaySymbol(Symbol* symbol, DebugDisplayOptions option);
 #define DISPLAY_HUFF_TREE_DEF(root) DISPLAY_HUFF_TREE(root, DISPLAY_OPTION_DEFAULT)
 
 #define DISPLAY_BIT_ARRAY(array, option) DisplayBitArray(array, option)
-#define DISPLAY_BIT_ARRAY_DEF DISPLAY_BIT_ARRAY(array, DISPLAY_OPTION_DEFAULT)
+#define DISPLAY_BIT_ARRAY_DEF(array) DISPLAY_BIT_ARRAY(array, DISPLAY_OPTION_DEFAULT)
 
 #define DISPLAY_HUFF_NODE(node, option) DisplayHuffNode(node, option)
 #define DISPLAY_HUFF_NODE_DEF(node) DISPLAY_HUFF_NODE(node, DISPLAY_OPTION_DEFAULT)

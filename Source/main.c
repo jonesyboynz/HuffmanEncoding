@@ -14,6 +14,7 @@ int main(int argc, char **argv){
 	FILE* output;
 	char* inputFilename;
 	char* outputFilename;
+	FileStream* stream;
 
 	//Open input file.
 	inputFilename = argv[1];
@@ -36,6 +37,9 @@ int main(int argc, char **argv){
 		return EXIT_FAIL;
 	}
 
+	//Create file streams.
+	stream = NewFileStream(output);
+
 	//Check the output file.
 	if (ferror(output) != 0){
 		UnableToOpenOutputMessage(outputFilename);
@@ -57,6 +61,8 @@ int main(int argc, char **argv){
 	DISPLAY_SYMBOL_TABLE_DEF(table);
 
 	//convert file to symbols & write
+	//bitarray serializeTable = SerializeTable(table);
+
 
 	printf("DONE!\n");
 
@@ -66,6 +72,7 @@ int main(int argc, char **argv){
 	free(frequencies);
 	DestroyHeapAndAllNodes(heap);
 	DestroySymbolTable(table);
+	DestroyFileStream(stream);
 
 	return EXIT_SUCCESS;
 }

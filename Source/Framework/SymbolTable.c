@@ -12,3 +12,13 @@ void DestroySymbolTable(SymbolTable* table){
 	}
 	free(table);
 }
+
+uint16_t TableCount(SymbolTable* table){
+	uint16_t count = 0;
+	for (uint16_t i = 0; i < SYSTEM_SYMBOL_COUNT; i++){
+		if (table->Table[i] != NULL){
+			count++;
+		}
+	}
+	return count;
+}

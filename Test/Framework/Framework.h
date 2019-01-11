@@ -10,6 +10,7 @@ Rolls the test code into one file
 #include "Execution.h"
 #include "Messages.h"
 #include "Assert.h"
+#include "SetupTeardown.h"
 #include "CoreIncludes.h"
 
 #endif

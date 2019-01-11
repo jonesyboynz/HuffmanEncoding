@@ -32,6 +32,8 @@ bool Symbol_table_is_correct(){
 	result &= AssertEquals(table->Table[EOF_CHARACTER_VALUE]->BitArray->Bits[0], 0x00);
 	DestroyHeapAndAllNodes(heap);
 	DestroySymbolTable(table);
+	free(frequencies);
+	fclose(file);
 	return result;	
 }
 

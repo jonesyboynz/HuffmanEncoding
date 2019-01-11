@@ -1,6 +1,9 @@
 #include "Test.h"
 #include "../../Framework/Framework.h"
 
+#define SETUP(x) SETUP_BASE(); BitArray* bitArray = NewBitArray(x)
+#define TEARDOWN(x) Destroy(bitArray); TEARDOWN_BASE()
+
 bool Can_create_bit_array_test();
 
 bool Bit_array_max_length_is_correct();
@@ -21,6 +24,12 @@ bool Array_append_limit();
 
 bool Array_clear_works();
 
+bool Push_byte_slice_is_correct_1();
+
+bool Push_byte_slice_is_correct_2();
+
+bool Push_byte_slice_works_at_limits();
+
 TestSet* Bit_array_test_set(){
 	TestSet* set = NewTestSet("Bit array tests");
 	AddTest(set, NewTest("Can create bit array", Can_create_bit_array_test, False));
@@ -33,6 +42,9 @@ TestSet* Bit_array_test_set(){
 	AddTest(set, NewTest("Append works", Array_append_works, False));
 	AddTest(set, NewTest("Cannot append more bits than array size", Array_append_limit, False));
 	AddTest(set, NewTest("Clear works", Array_clear_works, False));
+	AddTest(set, NewTest("Push byte slice is correct 1", Push_byte_slice_is_correct_1, False));
+	AddTest(set, NewTest("Push byte slice is correct 2", Push_byte_slice_is_correct_2, False));
+	AddTest(set, NewTest("Push byte slice is correct at limits", Push_byte_slice_works_at_limits, False));
 	return set;
 }
 
@@ -78,27 +90,25 @@ bool Can_add_bits(){
 }
 
 bool Can_remove_bits(){
-	BitArray* bitArray = NewBitArray(16);
+	SETUP(16);
 	for (uint8_t i = 0; i < 16; i++){
 		PushBit(bitArray, i % 2);
 	}
-	bool result = AssertEquals(PopBit(bitArray), BIT1);
-	result &= AssertEquals(PopBit(bitArray), BIT0);
-	result &= AssertEquals(bitArray->Count, 14);
-	Destroy(bitArray);
-	return result;
+	TEST_FOR(AssertEquals(PopBit(bitArray), BIT1));
+	TEST_FOR(AssertEquals(PopBit(bitArray), BIT0));
+	TEST_FOR(AssertEquals(bitArray->Count, 14));
+	TEARDOWN();
 }
 
 bool Array_limits_work(){
-	BitArray* bitArray = NewBitArray(30); //max should be 32.
-	bool result = AssertEquals(PopBit(bitArray), BIT_ERROR);
+	SETUP(30); //max should be 32.
+	TEST_FOR(AssertEquals(PopBit(bitArray), BIT_ERROR));
 	for (uint8_t i = 0; i < 32; i++){
 		PushBit(bitArray, i % 2);
 	}
-	result &= AssertFalse(PushBit(bitArray, BIT1));
-	result &= AssertEquals(bitArray->Count, 32);
-	Destroy(bitArray);
-	return result;
+	TEST_FOR(AssertFalse(PushBit(bitArray, BIT1)));
+	TEST_FOR(AssertEquals(bitArray->Count, 32));
+	TEARDOWN();
 }
 
 bool Array_copy_works(){
@@ -149,15 +159,37 @@ bool Array_append_limit(){
 }
 
 bool Array_clear_works(){
-	BitArray* bitArray = NewBitArray(16);
+	SETUP(16);
 	for (uint8_t i = 0; i < 16; i++){
 		PushBit(bitArray, i % 2);
 	}
 	Clear(bitArray);
-	bool result = AssertEquals(bitArray->Count, 0);
+	TEST_FOR(AssertEquals(bitArray->Count, 0));
 	for (uint8_t i = 0; i < bitArray->MaxCount / BITS_IN_BYTE; i++){
-		result &= AssertEquals(bitArray->Bits[i], 0x00);
+		TEST_FOR(AssertEquals(bitArray->Bits[i], 0x00));
 	}
-	Destroy(bitArray);
-	return result;
+	TEARDOWN();
+}
+
+bool Push_byte_slice_is_correct_1(){
+	SETUP(16);
+	TEST_FOR(AssertEquals(PushByteSlice(bitArray, 0x3c, 2, 6), 4));
+	TEST_FOR(AssertEquals(bitArray->Bits[0], 0xF0));
+	TEARDOWN();
+}
+
+bool Push_byte_slice_is_correct_2(){ //TODO
+	SETUP(16);
+	TEST_FOR(AssertEquals(PushByteSlice(bitArray, 0x3c, 2, 6), 4));
+	TEST_FOR(AssertEquals(bitArray->Bits[0], 0xF0));
+	TEARDOWN();
+}
+
+bool Push_byte_slice_works_at_limits(){
+	SETUP(8);
+	TEST_FOR(AssertEquals(PushByteSlice(bitArray, 0xFF, -1, -8), 0));
+	TEST_FOR(AssertEquals(PushByteSlice(bitArray, 0xFF, 10, 19), 0));
+	TEST_FOR(AssertEquals(PushByteSlice(bitArray, 0xFF, 0, 8), 8));
+	TEST_FOR(AssertEquals(PushByteSlice(bitArray, 0xFF, 0, 8), 0));
+	TEARDOWN();
 }

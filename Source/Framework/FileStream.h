@@ -20,6 +20,8 @@ FileStream* NewFileStream(FILE* file);
 
 void DestroyFileStream(FileStream* stream);
 
-void PushBits(BitArray* bitArray);
+void PushBits(FileStream* stream, BitArray* bitArray);
+
+void FinishOutput(FileStream* stream);
 
 #endif

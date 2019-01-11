@@ -61,6 +61,9 @@ void DisplayBitArray(BitArray* array, DebugDisplayOptions option){
 	printf("BitArray[%zd, %zd, ", array->MaxCount, array->Count);
 	for (size_t i = 0; i < BytesForBits(array->Count); i++){
 		DisplayBinary(array->Bits[i], DISPLAY_OPTION_NO_NEWLINE | DISPLAY_OPTION_NO_FLUSH);
+		if (i < BytesForBits(array->Count) - 1){
+			printf(" ");
+		}
 	}
 	printf("]");
 	HandleFinalActions(option);
