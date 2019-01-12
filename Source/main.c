@@ -62,7 +62,6 @@ int main(int argc, char **argv){
 	SymbolTable* table = GenerateEncodingSymbols(heap->Heap[HEAP_ROOT_INDEX]);
 
 	//Encode the symbol table and file. Write to file.
-	rewind(input);
 	Encode(input, outputStream, table);
 
 	//Cleanup
