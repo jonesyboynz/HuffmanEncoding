@@ -13,12 +13,18 @@ bool Symbol_1_is_encoded_correctly();
 
 bool Symbol_2_is_encoded_correctly();
 
+bool Symbol_3_is_encoded_correctly();
+
+bool Symbol_eof_is_encoded_correctly();
+
 TestSet* Serializer_test_set(){
 	TestSet* set = NewTestSet("Serializer tests");
 	AddTest(set, NewTest("Can serialize table", Can_serialize_table_test, False));
 	AddTest(set, NewTest("Serialized table length is correct", Serialized_table_length_is_correct, False));
 	AddTest(set, NewTest("Serialized table byte 1 is correct", Symbol_1_is_encoded_correctly, False));
 	AddTest(set, NewTest("Serialized table byte 2 is correct", Symbol_2_is_encoded_correctly, False));
+	AddTest(set, NewTest("Serialized table byte 3 is correct", Symbol_3_is_encoded_correctly, False));
+	AddTest(set, NewTest("Serialized table byte oef is correct", Symbol_eof_is_encoded_correctly, False));
 	return set;
 }
 
@@ -52,14 +58,28 @@ bool Symbol_1_is_encoded_correctly(){
 	//'a' = 97 | b01100001
 	//length = 1, symbol = b1 | 000011
 	TEST_FOR(AssertEquals(array->Bits[1], 0x30));
-	TEST_FOR(AssertEquals(array->Bits[2], 0x86));
-	DISPLAY_BIT_ARRAY_DEF(array);
-	DISPLAY_SYMBOL_TABLE_DEF(table);
+	TEST_FOR(AssertEquals(array->Bits[2], 0x82));
 	TEARDOWN();
 }
 
 bool Symbol_2_is_encoded_correctly(){
 	SETUP();
-	//TEST_FOR(AssertEquals(array->Bits[2] & 0x80, 0x00));
+	TEST_FOR(AssertEquals(array->Bits[3], 0x62));
+	TEST_FOR(AssertEquals(array->Bits[4], 0x0a));
+	TEARDOWN();
+}
+
+bool Symbol_3_is_encoded_correctly(){
+	SETUP();
+	TEST_FOR(AssertEquals(array->Bits[5], 0x63));
+	TEST_FOR(AssertEquals(array->Bits[6], 0x0F));
+	TEST_FOR(AssertEquals(array->Bits[7] & 0x80, 0x80));
+	TEARDOWN();
+}
+
+bool Symbol_eof_is_encoded_correctly(){
+	SETUP();
+	TEST_FOR(AssertEquals(array->Bits[7] & 0x7F, 0x07));
+	TEST_FOR(AssertEquals(array->Bits[8], 0x80));
 	TEARDOWN();
 }

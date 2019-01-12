@@ -1,22 +1,23 @@
-#include "FileStream.h"
+#include "FileOutputStream.h"
 
 #define FILE_STREAM_BUFFER_LENGTH 1024
 
-void FlushBuffer(FileStream* stream);
+void FlushBuffer(FileOutputStream* stream);
 
-FileStream* NewFileStream(FILE* file){
-	FileStream* stream = calloc(1, sizeof(FileStream));
+FileOutputStream* NewFileOutputStream(FILE* file){
+	FileOutputStream* stream = calloc(1, sizeof(FileOutputStream));
 	stream->File = file;
 	stream->Buffer = NewBitArray(FILE_STREAM_BUFFER_LENGTH * BITS_IN_BYTE);
 	return stream;
 }
 
-void DestroyFileStream(FileStream* stream){
+void DestroyFileOutputStream(FileOutputStream* stream){
 	Destroy(stream->Buffer);
+	fclose(stream->File);
 	free(stream);
 }
 
-void PushBits(FileStream* stream, BitArray* bitArray){
+void PushBits(FileOutputStream* stream, BitArray* bitArray){
 	size_t bitsAppended = Append(stream->Buffer, bitArray);
 	if (bitsAppended == bitArray->Count){
 		return;
@@ -31,9 +32,9 @@ void PushBits(FileStream* stream, BitArray* bitArray){
 }
 
 //Fill up the current byte and writes the buffer.
-void FinishOutput(FileStream* stream){
+void FinishOutput(FileOutputStream* stream){
 	while (stream->Buffer->Count % BITS_IN_BYTE != 0){
-		PushBits(stream, BIT0);
+		PushBit(stream->Buffer, BIT0);
 	}
 	FlushBuffer(stream);
 }
@@ -42,7 +43,7 @@ void FinishOutput(FileStream* stream){
 //					PRIVATE METHODS
 //======================================================
 
-void FlushBuffer(FileStream* stream){
+void FlushBuffer(FileOutputStream* stream){
 	//Write the buffer to the file and then reset it.
 	fwrite(stream->Buffer->Bits, sizeof(Bit), BytesForBits(stream->Buffer->Count), stream->File);
 	Clear(stream->Buffer);	

@@ -20,6 +20,8 @@ bool Array_copy_works();
 
 bool Array_append_works();
 
+bool Array_append_final_bit_correct();
+
 bool Array_append_limit();
 
 bool Array_clear_works();
@@ -40,6 +42,7 @@ TestSet* Bit_array_test_set(){
 	AddTest(set, NewTest("Limits work", Array_limits_work, False));
 	AddTest(set, NewTest("Copy works", Array_copy_works, False));
 	AddTest(set, NewTest("Append works", Array_append_works, False));
+	AddTest(set, NewTest("Append final bit is correct", Array_append_final_bit_correct, False));
 	AddTest(set, NewTest("Cannot append more bits than array size", Array_append_limit, False));
 	AddTest(set, NewTest("Clear works", Array_clear_works, False));
 	AddTest(set, NewTest("Push byte slice is correct 1", Push_byte_slice_is_correct_1, False));
@@ -142,6 +145,26 @@ bool Array_append_works(){
 	return result;
 }
 
+bool Array_append_final_bit_correct(){
+	BitArray* bitArray1 = NewBitArray(8);
+	BitArray* bitArray2 = NewBitArray(8);
+	BitArray* bitArray3 = NewBitArray(32);
+	for (uint8_t i = 0; i < 8; i++){
+		PushBit(bitArray1, BIT1);
+		PushBit(bitArray2, BIT0);
+	}
+	bool result = AssertEquals(Append(bitArray3, bitArray1), 8);
+	result &= AssertEquals(Append(bitArray3, bitArray2), 8);
+	result &= AssertEquals(Append(bitArray3, bitArray1), 8);
+	result &= AssertEquals(bitArray3->Bits[0], 0xFF);
+	result &= AssertEquals(bitArray3->Bits[1], 0x00);
+	result &= AssertEquals(bitArray3->Bits[2], 0xFF);
+	Destroy(bitArray1);
+	Destroy(bitArray2);
+	Destroy(bitArray3);
+	return result;
+}
+
 bool Array_append_limit(){
 	BitArray* bitArray1 = NewBitArray(16);
 	BitArray* bitArray2 = NewBitArray(16);
@@ -155,7 +178,6 @@ bool Array_append_limit(){
 	Destroy(bitArray1);
 	Destroy(bitArray2);
 	return result;
-
 }
 
 bool Array_clear_works(){

@@ -14,7 +14,7 @@ This allows the framework to be exposed EXTERNALLY
 #include "BitArray.h"
 #include "Symbol.h"
 #include "SymbolTable.h"
-#include "FileStream.h"
+#include "FileOutputStream.h"
 #include "ByteArray.h"
 #include "Debug.h"
 

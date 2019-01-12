@@ -62,7 +62,7 @@ void DisplayBitArray(BitArray* array, DebugDisplayOptions option){
 	for (size_t i = 0; i < BytesForBits(array->Count); i++){
 		DisplayBinary(array->Bits[i], DISPLAY_OPTION_NO_NEWLINE | DISPLAY_OPTION_NO_FLUSH);
 		if (i < BytesForBits(array->Count) - 1){
-			printf(" ");
+			printf(" "); //Place a space between bytes to make things clearer.
 		}
 	}
 	printf("]");

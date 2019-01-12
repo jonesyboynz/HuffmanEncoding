@@ -16,23 +16,25 @@ BitArray* SerializeSymbolTable(SymbolTable* table){
 	for (uint16_t i = 0; i < SYSTEM_SYMBOL_COUNT; i++){
 
 		if (table->Table[i] != NULL && i != EOF_CHARACTER_VALUE){
-
 			//Push the character to the bit array.
 			PushByteSlice(array, table->Table[i]->Character, 0, BITS_IN_BYTE);
 
 			//Push the symbol size to the bit array.
 			PushByteSlice(array,
-				(uint8_t) table->Table[i]->BitArray->Count, 0, SYMBOL_LENGTH_BITS);
+				(uint8_t) table->Table[i]->BitArray->Count, 
+				BITS_IN_BYTE - SYSTEM_SYMBOL_MAX_BYTES_LENGTH,
+				BITS_IN_BYTE);
 
 			//Append the symbol to the bit array.
 			Append(array, table->Table[i]->BitArray);
 		}
-
-		//Push the EOF character to the bit array as the final character.
-		PushByteSlice(array,
-				(uint8_t) table->Table[EOF_CHARACTER_VALUE]->BitArray->Count, 0, SYMBOL_LENGTH_BITS);
-		Append(array, table->Table[EOF_CHARACTER_VALUE]->BitArray);
 	}
+	//Push the EOF character to the bit array as the final character.
+	PushByteSlice(array,
+		(uint8_t) table->Table[EOF_CHARACTER_VALUE]->BitArray->Count, 
+		BITS_IN_BYTE - SYSTEM_SYMBOL_MAX_BYTES_LENGTH,
+		BITS_IN_BYTE);
+	Append(array, table->Table[EOF_CHARACTER_VALUE]->BitArray);
 	return array;
 }
 

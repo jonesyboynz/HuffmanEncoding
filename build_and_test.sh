@@ -10,6 +10,10 @@ echo -e "================================================"
 echo -e "================ RUNNING BUILD ================="
 echo -e "================================================"
 ./huff Test/Data/build_test_data build_test_output.out
+echo -e "Size Before:"
+du -h --apparent-size Test/Data/build_test_data
+echo -e "Size After:"
+du -h --apparent-size build_test_output.out
 echo -e "================================================"
 echo -e "=================== CLEANUP ===================="
 echo -e "================================================"

@@ -15,6 +15,9 @@ System constants
 //256 bits occupies 32 bytes.
 #define SYSTEM_SYMBOL_MAX_BYTES 32
 
+//0-32 requires 6 bits
+#define SYSTEM_SYMBOL_MAX_BYTES_LENGTH 6
+
 //Symbols that use 256 bits require 9 bits to encode their length.
 #define SYMBOL_LENGTH_BITS 9
 

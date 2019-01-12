@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "Framework/Framework.h"
 #include "Encoding/CharacterFrequencies.h"
+#include "Encoding/Encode.h"
 
 
 int main(int argc, char **argv){
@@ -14,7 +15,7 @@ int main(int argc, char **argv){
 	FILE* output;
 	char* inputFilename;
 	char* outputFilename;
-	FileStream* stream;
+	FileOutputStream* outputStream;
 
 	//Open input file.
 	inputFilename = argv[1];
@@ -34,11 +35,12 @@ int main(int argc, char **argv){
 	else{
 		//TODO : needs a custom file name.
 		//output = fopen(SomeFunction(argv[2]), "wb");
+		printf("NEEDS OUTPUT FILENAME\n");
 		return EXIT_FAIL;
 	}
 
 	//Create file streams.
-	stream = NewFileStream(output);
+	outputStream = NewFileOutputStream(output);
 
 	//Check the output file.
 	if (ferror(output) != 0){
@@ -58,21 +60,17 @@ int main(int argc, char **argv){
 
 	//get symbol table 
 	SymbolTable* table = GenerateEncodingSymbols(heap->Heap[HEAP_ROOT_INDEX]);
-	DISPLAY_SYMBOL_TABLE_DEF(table);
 
-	//convert file to symbols & write
-	//bitarray serializeTable = SerializeTable(table);
-
-
-	printf("DONE!\n");
+	//Encode the symbol table and file. Write to file.
+	rewind(input);
+	Encode(input, outputStream, table);
 
 	//Cleanup
 	fclose(input);
-	fclose(output);
 	free(frequencies);
 	DestroyHeapAndAllNodes(heap);
 	DestroySymbolTable(table);
-	DestroyFileStream(stream);
+	DestroyFileOutputStream(outputStream);
 
 	return EXIT_SUCCESS;
 }

@@ -32,9 +32,9 @@ Bit GetBit(BitArray* bitArray, size_t index){
 	if (index < 0 || index >= bitArray->Count){
 		return BIT_ERROR;
 	}
-	uint8_t shift = ShiftForBit(bitArray->Count - 1);
+	uint8_t shift = ShiftForBit(index % 8);
 	uint8_t mask = BIT1 << shift;
-	Bit bit = bitArray->Bits[ByteIndex(index)] & mask;
+	Bit bit = (bitArray->Bits[ByteIndex(index)] & mask) >> shift;
 	return bit;
 }
 
@@ -104,7 +104,8 @@ void Clear(BitArray* bitArray){
 size_t Append(BitArray* original, BitArray* appendBits){
 	size_t bitsAppended = 0;
 	for (size_t i = 0; i < appendBits->Count; i++){
-		if (PushBit(original, GetBit(appendBits, i)) == False){
+		Bit bit = GetBit(appendBits, i);
+		if (PushBit(original, bit) == False){
 			return bitsAppended;
 		}
 		bitsAppended += 1;
