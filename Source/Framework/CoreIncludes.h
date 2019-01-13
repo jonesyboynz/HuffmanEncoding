@@ -9,12 +9,11 @@ This file should be included in all framework INTERNALS.
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "Bool.h"
+#include <string.h>
+#include "CoreTypes/Bool.h"
+#include "CoreTypes/Bit.h"
+#include "CoreTypes/Mode.h"
+#include "CoreTypes/Frequency.h"
 #include "Constants.h"
-
-//Represents the frequency at which a character occurs.
-typedef uint64_t Frequency;
-
-typedef uint8_t Bit;
 
 #endif

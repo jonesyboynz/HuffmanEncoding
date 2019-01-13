@@ -27,11 +27,6 @@ System constants
 //Should be self explanitory
 #define BITS_IN_BYTE 8
 
-//Bits
-#define BIT0 0x00
-#define BIT1 0x01
-#define BIT_ERROR 0xFF
-
 //Bytes
 #define BYTE_ERROR 0xFF //Note: this is a valid byte...
 

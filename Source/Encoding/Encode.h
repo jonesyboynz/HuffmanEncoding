@@ -7,6 +7,6 @@ Method for encoding a file.
 
 #include "../Framework/Framework.h"
 
-void Encode(FILE* inputFile, FileOutputStream* outputStream, SymbolTable* table);
+void Encode(FILE* inputFile, FileOutputStream* outputStream);
 
 #endif

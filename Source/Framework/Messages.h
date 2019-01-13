@@ -13,4 +13,6 @@ void UnableToOpenInputMessage(char* filename);
 
 void UnableToOpenOutputMessage(char* filename);
 
+void ModeInvalidMessage(char* mode);
+
 #endif
