@@ -1,7 +1,5 @@
 #include "FileOutputStream.h"
 
-#define FILE_STREAM_BUFFER_LENGTH 1024
-
 void FlushBuffer(FileOutputStream* stream);
 
 FileOutputStream* NewFileOutputStream(FILE* file){

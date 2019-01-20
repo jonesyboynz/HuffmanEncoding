@@ -15,6 +15,7 @@ This allows the framework to be exposed EXTERNALLY
 #include "Symbol.h"
 #include "SymbolTable.h"
 #include "FileOutputStream.h"
+#include "FileInputStream.h"
 #include "ByteArray.h"
 #include "Debug.h"
 

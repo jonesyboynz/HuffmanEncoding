@@ -44,4 +44,7 @@ System constants
 //EOF symbol character position
 #define EOF_CHARACTER_VALUE 256
 
+//Buffer size to use in file streams
+#define FILE_STREAM_BUFFER_LENGTH 1024
+
 #endif

@@ -13,8 +13,8 @@ clean: clean_test clean_huff
 
 HUFF_FRAMEWORK_CORE_DEPS = Source/Framework/CoreTypes/Bool.h Source/Framework/CoreTypes/Bit.h Source/Framework/CoreTypes/Mode.h Source/Framework/CoreTypes/Frequency.h Source/Framework/Constants.h Source/Framework/CoreIncludes.h
 
-HUFF_FRAMEWORK_DEPS = Source/Framework/BitArray.h Source/Framework/Messages.h Source/Framework/HuffTreeNode.h Source/Framework/HuffTree.h Source/Framework/HuffNodeHeap.h Source/Framework/Symbol.h Source/Framework/SymbolTable.h Source/Framework/FileOutputStream.h Source/Framework/ByteArray.h Source/Framework/Debug.h Source/Framework/Framework.h
-HUFF_FRAMEWORK_OBJ =  Source/Framework/BitArray.o Source/Framework/Messages.o Source/Framework/HuffTreeNode.o Source/Framework/HuffTree.o Source/Framework/HuffNodeHeap.o Source/Framework/Symbol.o Source/Framework/SymbolTable.o Source/Framework/FileOutputStream.o Source/Framework/ByteArray.o Source/Framework/Debug.o
+HUFF_FRAMEWORK_DEPS = Source/Framework/BitArray.h Source/Framework/Messages.h Source/Framework/HuffTreeNode.h Source/Framework/HuffTree.h Source/Framework/HuffNodeHeap.h Source/Framework/Symbol.h Source/Framework/SymbolTable.h Source/Framework/FileOutputStream.h Source/Framework/FileInputStream.h Source/Framework/ByteArray.h Source/Framework/Debug.h Source/Framework/Framework.h
+HUFF_FRAMEWORK_OBJ =  Source/Framework/BitArray.o Source/Framework/Messages.o Source/Framework/HuffTreeNode.o Source/Framework/HuffTree.o Source/Framework/HuffNodeHeap.o Source/Framework/Symbol.o Source/Framework/SymbolTable.o Source/Framework/FileOutputStream.o Source/Framework/FileInputStream.o Source/Framework/ByteArray.o Source/Framework/Debug.o
 
 HUFF_ENCODING_DEPS = Source/Encoding/CharacterFrequencies.h Source/Encoding/Serializer.h Source/Encoding/Encode.h
 HUFF_ENCODING_OBJ = Source/Encoding/CharacterFrequencies.o Source/Encoding/Serializer.o Source/Encoding/Encode.o
@@ -30,8 +30,8 @@ TEST_FRAMEWORK_CORE_DEPS = Test/Framework/CoreIncludes.h
 TEST_FRAMEWORK_DEPS = Test/Framework/Messages.h Test/Framework/Test.h Test/Framework/TestSet.h Test/Framework/Assert.h Test/Framework/Execution.h Test/Framework/SetupTeardown.h Test/Framework/Framework.h
 TEST_FRAMEWORK_OBJ =  Test/Framework/Messages.o Test/Framework/Test.o Test/Framework/TestSet.o Test/Framework/Assert.o Test/Framework/Execution.o
 
-TEST_CASE_DEPS = Test/TestCase/CharacterFrequency/Test.h Test/TestCase/HuffTree/Test.h Test/TestCase/HuffHeap/Test.h Test/TestCase/BitArray/Test.h Test/TestCase/Symbol/Test.h Test/TestCase/ByteArray/Test.h Test/TestCase/Serializer/Test.h
-TEST_CASE_OBJ =  Test/TestCase/CharacterFrequency/Test.o Test/TestCase/HuffTree/Test.o Test/TestCase/HuffHeap/Test.o Test/TestCase/BitArray/Test.o Test/TestCase/Symbol/Test.o Test/TestCase/ByteArray/Test.o Test/TestCase/Serializer/Test.o
+TEST_CASE_DEPS = Test/TestCase/CharacterFrequency/Test.h Test/TestCase/HuffTree/Test.h Test/TestCase/HuffHeap/Test.h Test/TestCase/BitArray/Test.h Test/TestCase/Symbol/Test.h Test/TestCase/ByteArray/Test.h Test/TestCase/Serializer/Test.h Test/TestCase/Deserializer/Test.h
+TEST_CASE_OBJ =  Test/TestCase/CharacterFrequency/Test.o Test/TestCase/HuffTree/Test.o Test/TestCase/HuffHeap/Test.o Test/TestCase/BitArray/Test.o Test/TestCase/Symbol/Test.o Test/TestCase/ByteArray/Test.o Test/TestCase/Serializer/Test.o Test/TestCase/Deserializer/Test.o
 
 TEST_DEPS = $(TEST_FRAMEWORK_CORE_DEPS) $(TEST_FRAMEWORK_DEPS) $(TEST_CASE_DEPS) Test/TestCase/All.h
 TEST_OBJ = $(HUFF_OBJ) $(TEST_FRAMEWORK_OBJ) $(TEST_CASE_OBJ)
