@@ -7,8 +7,11 @@ SymbolTable* DeserializeSymbolTable(FileInputStream* stream){
 	ShiftBitsTo(stream, &table_length, SYMBOL_LENGTH_BITS);
 
 	if (table_length < 2){
-		//TODO : Error
+		DecodingError("Invalid symbol table size.");
+		return NULL;
 	}
+
+	//printf("Table length: %d\n", table_length);
 
 	//Process characters
 	for (uint32_t i = 0; i < table_length - 1; i++){

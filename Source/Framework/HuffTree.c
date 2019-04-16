@@ -3,6 +3,8 @@
 
 void AddSymbolToTable(SymbolTable* table, HuffNode* node, BitArray* bitArray);
 
+void AddSymbolToTree(Symbol* symbol, HuffNode* parent, uint16_t current_index);
+
 //Converts a heap to a tree.
 void GenerateTreeWithinHeap(HuffHeap* heap){
 	while(heap->Count > 1){
@@ -41,6 +43,18 @@ SymbolTable* GenerateEncodingSymbols(HuffNode* node){
 	return table;
 }
 
+
+HuffNode* GenerateTreeFromTable(SymbolTable* table){
+	HuffNode* root = NewHuffNode(BYTE_UNUSED, SYMBOL_TYPE_PARENT, 0);
+	for (uint16_t i = 0; i < SYSTEM_SYMBOL_COUNT; ++i)
+	{
+		if (table->Table[i]->BitArray->Count > 0){
+			AddSymbolToTree(table->Table[i], root, 0);
+		}
+	}
+	return root;
+}
+
 //=============================================================================
 //							PRIVATE METHODS
 //=============================================================================
@@ -66,5 +80,32 @@ void AddSymbolToTable(SymbolTable* table, HuffNode* node, BitArray* bitArray){
 		PushBit(bitArray, BIT1);
 		AddSymbolToTable(table, node->Right, bitArray);
 		PopBit(bitArray);
+	}
+}
+
+//Adds a symbol to the tree
+void AddSymbolToTree(Symbol* symbol, HuffNode* parent, uint16_t current_index){
+	Bit current_bit = GetBit(symbol->BitArray, current_index);
+	if (current_bit == BIT0){
+		if (current_index == symbol->BitArray->Count - 1){
+			parent->Left = NewHuffNode(symbol->Character, SYMBOL_TYPE_CHARACTER, 0);
+			return;
+		}
+		else if (parent->Left == NULL){
+			parent->Left = NewHuffNode(BYTE_UNUSED, SYMBOL_TYPE_PARENT, 0);
+		}
+		AddSymbolToTree(symbol, parent->Left, current_index + 1);
+	}
+	else{
+		if (current_index == symbol->BitArray->Count - 1){
+			parent->Right = NewHuffNode(symbol->Character, SYMBOL_TYPE_CHARACTER, 0);
+			return;
+		}
+		else if (parent->Left == NULL){
+			parent->Right = NewHuffNode(BYTE_UNUSED, SYMBOL_TYPE_PARENT, 0);
+		}
+		else{
+			AddSymbolToTree(symbol, parent->Right, current_index + 1);
+		}
 	}
 }

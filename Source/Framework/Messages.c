@@ -15,3 +15,7 @@ void UnableToOpenOutputMessage(char* filename){
 void ModeInvalidMessage(char* mode){
 	printf("Error: Invalid mode \"%s\". Mode should be [encode|decode|e|d]\n", mode);
 }
+
+void DecodingError(char* message){
+	printf("Decoding Error: %s\n", message);
+}

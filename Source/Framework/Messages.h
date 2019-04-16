@@ -15,4 +15,6 @@ void UnableToOpenOutputMessage(char* filename);
 
 void ModeInvalidMessage(char* mode);
 
+void DecodingError(char* message);
+
 #endif

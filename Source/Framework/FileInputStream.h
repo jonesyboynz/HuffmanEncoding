@@ -11,6 +11,7 @@ Defines a stream for reading bytes from a file.
 typedef struct file_input_stream_s {
 	FILE* File;
 	BitArray* Buffer;
+	size_t CurrentBit;
 	bool EndOfFile;
 } FileInputStream;
 

@@ -7,6 +7,7 @@ FileInputStream* NewFileInputStream(FILE* file){
 	stream->File = file;
 	stream->Buffer = NewBitArray(FILE_STREAM_BUFFER_LENGTH * BITS_IN_BYTE);
 	stream->EndOfFile = False;
+	stream->CurrentBit = 0;
 	return stream;
 }
 
@@ -18,11 +19,14 @@ void DestoryFileInputStream(FileInputStream* stream){
 
 size_t ShiftBitsTo(FileInputStream* stream, uint32_t* value, size_t bits){
 	size_t count = 0;
+	*value = 0;
 	while (count < bits && stream->EndOfFile == False){
 		if (stream->Buffer->Count > 0){
-			Bit bit = PopBit(stream->Buffer);
+			Bit bit = GetBit(stream->Buffer, stream->CurrentBit);
 			*value = (*value << 1) + bit;
+			//printf("B: %d, V: %d\n", bit, *value);
 			count += 1;
+			stream->CurrentBit += 1;
 		}
 		else{
 			GetNextBytes(stream);
@@ -36,7 +40,9 @@ BitArray* ShiftBitsToArray(FileInputStream* stream, size_t bits){
 	size_t count = 0;
 	while (count < bits && stream->EndOfFile == False){
 		if (stream->Buffer->Count > 0){
-			PushBit(array, PopBit(stream->Buffer));
+			PushBit(array, GetBit(stream->Buffer, stream->CurrentBit));
+			count += 1;
+			stream->CurrentBit += 1;
 		}
 		else{
 			GetNextBytes(stream);
@@ -54,5 +60,5 @@ void GetNextBytes(FileInputStream* stream){
 	stream->Buffer->Count = bytes_read * BITS_IN_BYTE;
 	if (bytes_read == 0){
 		stream->EndOfFile = True;
-	}	
+	}
 }

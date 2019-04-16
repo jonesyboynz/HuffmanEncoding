@@ -1,5 +1,6 @@
 #include "Framework/Framework.h"
 #include "Encoding/Encode.h"
+#include "Decoding/Decode.h"
 
 #define MAX_ARGUMENT_LENGTH 1024
 
@@ -103,7 +104,7 @@ int main(int argc, char **argv){
 		Encode(input, outputStream);
 	}
 	else { //Must be decode mode
-		Encode(input, outputStream);
+		Decode(input, outputStream);
 	} 
 
 	//Cleanup

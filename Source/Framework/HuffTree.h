@@ -16,4 +16,6 @@ uint16_t LeafCount(HuffNode* node);
 
 SymbolTable* GenerateEncodingSymbols(HuffNode* node);
 
+HuffNode* GenerateTreeFromTable(SymbolTable* table);
+
 #endif
