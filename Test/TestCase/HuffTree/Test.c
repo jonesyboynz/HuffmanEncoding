@@ -15,8 +15,6 @@ bool Tree_count_is_correct_test();
 
 bool Tree_frequency_is_correct_test();
 
-bool Can_generate_tree_from_symbol_table();
-
 TestSet* Huffman_node_test_set();
 
 TestSet* Huffman_tree_test_set();
@@ -34,7 +32,6 @@ TestSet* Huffman_tree_test_set(){
 	AddTest(set, NewTest("Tree structure is correct", Tree_structure_is_correct_test, False));
 	AddTest(set, NewTest("Tree frequency is correct", Tree_frequency_is_correct_test, False));
 	AddTest(set, NewTest("Tree count is correct", Tree_count_is_correct_test, False));
-	AddTest(set, NewTest("Can generate tree from symbol table", Can_generate_tree_from_symbol_table, False));
 	return set;	
 }
 
@@ -101,22 +98,5 @@ bool Tree_count_is_correct_test(){
 	bool result = AssertEquals(Count(heap->Heap[1]), 7);
 	result = AssertEquals(LeafCount(heap->Heap[1]), 4);
 	DestroyHeapAndAllNodes(heap);
-	return result;	
-}
-
-bool Can_generate_tree_from_symbol_table(){
-	FILE* file = fopen("Test/Data/deserializer_test_data", "rb");
-	FileInputStream* inputStream = NewFileInputStream(file);
-	SymbolTable* table = DeserializeSymbolTable(inputStream);
-	HuffNode* tree = GenerateTreeFromTable(table);
-	
-	DISPLAY_SYMBOL_TABLE_DEF(table);
-
-	DISPLAY_HUFF_TREE_DEF(tree);
-
-	bool result = AssertEquals(1, 1);
-
-	DestoryFileInputStream(inputStream);
-	DestroySymbolTable(table);
 	return result;	
 }

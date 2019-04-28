@@ -1,6 +1,8 @@
 #include "HuffTree.h"
 #include "SymbolTable.h"
 
+#include "Debug.h"
+
 void AddSymbolToTable(SymbolTable* table, HuffNode* node, BitArray* bitArray);
 
 void AddSymbolToTree(Symbol* symbol, HuffNode* parent, uint16_t current_index);
@@ -46,9 +48,9 @@ SymbolTable* GenerateEncodingSymbols(HuffNode* node){
 
 HuffNode* GenerateTreeFromTable(SymbolTable* table){
 	HuffNode* root = NewHuffNode(BYTE_UNUSED, SYMBOL_TYPE_PARENT, 0);
-	for (uint16_t i = 0; i < SYSTEM_SYMBOL_COUNT; ++i)
+	for (uint16_t i = 0; i < SYSTEM_SYMBOL_COUNT; i++)
 	{
-		if (table->Table[i]->BitArray->Count > 0){
+		if (table->Table[i] != NULL){
 			AddSymbolToTree(table->Table[i], root, 0);
 		}
 	}

@@ -5,11 +5,14 @@
 #define SETUP() SETUP_BASE(); FileInputStream* inputStream = NewFileInputStream(fopen("Test/Data/deserializer_test_data", "rb")); SymbolTable* table = DeserializeSymbolTable(inputStream)
 #define TEARDOWN() DestoryFileInputStream(inputStream); DestroySymbolTable(table); TEARDOWN_BASE()
 
-bool Deserializer_test_case_1(void);
+bool Can_generate_symbol_table(void);
+
+bool Can_generate_tree_from_symbol_table();
 
 TestSet* Deserializer_test_set(){
 	TestSet* set = NewTestSet("Deserializer test set");
-	AddTest(set, NewTest("Deserializer test case 1", Deserializer_test_case_1, False));
+	AddTest(set, NewTest("Can generate symbol table", Can_generate_symbol_table, False));
+	AddTest(set, NewTest("Can generate tree from symbol table", Can_generate_tree_from_symbol_table, False));
 	return set;
 }
 
@@ -17,12 +20,21 @@ TestSet* Deserializer_test_set(){
 //							TEST CASES
 //==========================================================================
 
-bool Deserializer_test_case_1(void){
+bool Can_generate_symbol_table(void){
 	SETUP();
-	
-	DISPLAY_SYMBOL_TABLE_DEF(table);
-
+	TEST_FOR(AssertEquals((uint32_t) table->Table['b']->Character, (uint32_t) 'b'));
+	TEST_FOR(AssertEquals((uint32_t) table->Table['b']->BitArray->Bits[0], (uint32_t) 0x40));
+	TEST_FOR(AssertEquals((uint32_t) table->Table[133]->BitArray->Bits[0], (uint32_t) 0x80));
+	TEST_FOR(AssertEquals((uint32_t) table->Table[256]->BitArray->Bits[0], (uint32_t) 0x00));
 	TEARDOWN();
 }
 
+bool Can_generate_tree_from_symbol_table(){
+	SETUP();
+	
+	DISPLAY_SYMBOL_TABLE_DEF(table);
+	HuffNode* tree = GenerateTreeFromTable(table);
+	DISPLAY_HUFF_TREE_DEF(tree);
 
+	TEARDOWN();	
+}
