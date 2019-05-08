@@ -13,6 +13,11 @@ void Repeat(uint8_t character, uint16_t times);
 //Private
 void DisplayHuffTree_Rec(HuffNode* node, uint16_t depth);
 
+void DisplayMessage(const char* message, DebugDisplayOptions option){
+	printf("%s", message);
+	HandleFinalActions(option);
+}
+
 void DisplayBinary(uint8_t byte, DebugDisplayOptions option){
 	for(uint8_t i = 0; i < BITS_IN_BYTE; i++){
 		uint8_t mask = 1 << (BITS_IN_BYTE - 1 - i);

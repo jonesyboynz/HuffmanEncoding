@@ -20,6 +20,8 @@ def main():
 	else:
 		file = open(arguments.input_filename, "rb")
 		data = file.read()
+	if len(data) == 0:
+		print("{0:04X} {1:04X} | ".format(0, 0))
 	for i in range(0, len(data) // 8 + 1 if(len(data) % 8 > 0) else 0):
 		print("{0:04X} {1:04X} | ".format((i * 8) // 0x10000, (i * 8) % 0x10000), end="")
 		print(" ".join(["{0:08b}".format(x) for x in data[i * 8 : (i + 1) * 8]]))

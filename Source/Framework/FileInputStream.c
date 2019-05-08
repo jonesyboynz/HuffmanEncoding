@@ -1,7 +1,5 @@
 #include "FileInputStream.h"
 
-void GetNextBytes(FileInputStream* stream);
-
 FileInputStream* NewFileInputStream(FILE* file){
 	FileInputStream* stream = malloc(sizeof(FileInputStream));
 	stream->File = file;
@@ -50,10 +48,6 @@ BitArray* ShiftBitsToArray(FileInputStream* stream, size_t bits){
 	}
 	return array;
 }
-
-//=========================================================================
-//							PRIVATE METHODS
-//=========================================================================
 
 void GetNextBytes(FileInputStream* stream){
 	size_t bytes_read = fread(stream->Buffer->Bits, sizeof(uint8_t), FILE_STREAM_BUFFER_LENGTH, stream->File);

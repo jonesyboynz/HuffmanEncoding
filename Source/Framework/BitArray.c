@@ -59,6 +59,16 @@ bool PushBit(BitArray* bitArray, Bit bit){
 	return True;
 }
 
+//Beware: may override existing bits
+bool QuickPushByte(BitArray* bitArray, uint8_t byte){
+	if (bitArray->MaxCount == bitArray->Count){
+		return False;
+	}
+	bitArray->Bits[bitArray->Count / BITS_IN_BYTE] = byte;
+	return True;
+}
+
+
 /*
 Pushes a splice of a byte onto the bit array.
 the first bit from the left is treated as index 0.

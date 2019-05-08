@@ -19,6 +19,8 @@ typedef uint16_t DebugDisplayOptions;
 #define DISPLAY_OPTION_EXPLICIT 	0x0002 //Display everything
 #define DISPLAY_OPTION_NO_FLUSH 	0x0004 //Display everything
 
+void DisplayMessage(const char* message, DebugDisplayOptions option); 
+
 void DisplayBinary(uint8_t byte, DebugDisplayOptions option);
 
 void DisplayHuffHeap(HuffHeap* heap, DebugDisplayOptions options);
@@ -60,5 +62,8 @@ void DisplaySymbol(Symbol* symbol, DebugDisplayOptions option);
 
 #define DISPLAY_SYMBOL(symbol, option) DisplaySymbol(symbol, option)
 #define DISPLAY_SYMBOL_DEF(symbol) DISPLAY_SYMBOL(symbol, DISPLAY_OPTION_DEFAULT)
+
+#define DISPLAY_MESSAGE(symbol, option) DisplayMessage(symbol, option)
+#define DISPLAY_MESSAGE_DEF(symbol) DISPLAY_MESSAGE(symbol, DISPLAY_OPTION_DEFAULT)
 
 #endif

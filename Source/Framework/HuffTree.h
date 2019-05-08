@@ -18,4 +18,6 @@ SymbolTable* GenerateEncodingSymbols(HuffNode* node);
 
 HuffNode* GenerateTreeFromTable(SymbolTable* table);
 
+bool ValidateTree(HuffNode* node);
+
 #endif

@@ -23,4 +23,6 @@ size_t ShiftBitsTo(FileInputStream* stream, uint32_t* value, size_t bits);
 
 BitArray* ShiftBitsToArray(FileInputStream* stream, size_t bits);
 
+void GetNextBytes(FileInputStream* stream);
+
 #endif

@@ -31,10 +31,9 @@ bool Can_generate_symbol_table(void){
 
 bool Can_generate_tree_from_symbol_table(){
 	SETUP();
-	
-	DISPLAY_SYMBOL_TABLE_DEF(table);
+	//DISPLAY_SYMBOL_TABLE_DEF(table);
 	HuffNode* tree = GenerateTreeFromTable(table);
-	DISPLAY_HUFF_TREE_DEF(tree);
-
+	//DISPLAY_HUFF_TREE_DEF(tree);
+	TEST_FOR(AssertTrue(tree != NULL));
 	TEARDOWN();	
 }

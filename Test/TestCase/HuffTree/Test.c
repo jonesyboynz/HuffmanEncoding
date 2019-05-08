@@ -15,6 +15,10 @@ bool Tree_count_is_correct_test();
 
 bool Tree_frequency_is_correct_test();
 
+bool Can_validate_valid_tree_test();
+
+bool Can_invalidate_invalid_tree_test();
+
 TestSet* Huffman_node_test_set();
 
 TestSet* Huffman_tree_test_set();
@@ -32,6 +36,8 @@ TestSet* Huffman_tree_test_set(){
 	AddTest(set, NewTest("Tree structure is correct", Tree_structure_is_correct_test, False));
 	AddTest(set, NewTest("Tree frequency is correct", Tree_frequency_is_correct_test, False));
 	AddTest(set, NewTest("Tree count is correct", Tree_count_is_correct_test, False));
+	AddTest(set, NewTest("Can detect valid trees", Can_validate_valid_tree_test, False));
+	AddTest(set, NewTest("Can detect invalid trees", Can_invalidate_invalid_tree_test, False));
 	return set;	
 }
 
@@ -100,3 +106,24 @@ bool Tree_count_is_correct_test(){
 	DestroyHeapAndAllNodes(heap);
 	return result;	
 }
+
+bool Can_validate_valid_tree_test(){
+	HuffNode* node1 = NewHuffNode(0x01, SYMBOL_TYPE_PARENT, 1);
+	HuffNode* node2 = NewHuffNode(0x02, SYMBOL_TYPE_CHARACTER, 1);
+	HuffNode* node3 = NewHuffNode(0x03, SYMBOL_TYPE_CHARACTER, 1);
+	node1->Left=node2;
+	node1->Right=node3;
+	return AssertTrue(ValidateTree(node1));	
+}
+
+bool Can_invalidate_invalid_tree_test(){
+	HuffNode* node1 = NewHuffNode(0x01, SYMBOL_TYPE_PARENT, 1);
+	HuffNode* node2 = NewHuffNode(0x02, SYMBOL_TYPE_CHARACTER, 1);
+	HuffNode* node3 = NewHuffNode(0x03, SYMBOL_TYPE_PARENT, 1);
+	HuffNode* node4 = NewHuffNode(0x04, SYMBOL_TYPE_CHARACTER, 1);
+	node1->Left=node2;
+	node1->Right=node3;
+	node1->Right->Left=node4;
+	return AssertFalse(ValidateTree(node1));	
+}
+

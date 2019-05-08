@@ -22,6 +22,8 @@ void DestroyFileOutputStream(FileOutputStream* stream);
 
 void PushBits(FileOutputStream* stream, BitArray* bitArray);
 
+void PushByteToStream(FileOutputStream* stream, uint8_t byte);
+
 void FinishOutput(FileOutputStream* stream);
 
 #endif

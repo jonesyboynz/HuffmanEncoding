@@ -29,6 +29,13 @@ void PushBits(FileOutputStream* stream, BitArray* bitArray){
 	}
 }
 
+void PushByteToStream(FileOutputStream* stream, uint8_t byte){
+	if (QuickPushByte(stream->Buffer, byte) == False){
+		FlushBuffer(stream);
+		QuickPushByte(stream->Buffer, byte);
+	}
+}
+
 //Fill up the current byte and writes the buffer.
 void FinishOutput(FileOutputStream* stream){
 	while (stream->Buffer->Count % BITS_IN_BYTE != 0){

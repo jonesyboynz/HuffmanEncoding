@@ -90,7 +90,7 @@ void AddSymbolToTree(Symbol* symbol, HuffNode* parent, uint16_t current_index){
 	Bit current_bit = GetBit(symbol->BitArray, current_index);
 	if (current_bit == BIT0){
 		if (current_index == symbol->BitArray->Count - 1){
-			parent->Left = NewHuffNode(symbol->Character, SYMBOL_TYPE_CHARACTER, 0);
+			parent->Left = NewHuffNode(symbol->Character, (symbol->BitArray->Count == 0) ? SYMBOL_TYOE_EOF : SYMBOL_TYPE_CHARACTER, 0);
 			return;
 		}
 		else if (parent->Left == NULL){
@@ -100,14 +100,27 @@ void AddSymbolToTree(Symbol* symbol, HuffNode* parent, uint16_t current_index){
 	}
 	else{
 		if (current_index == symbol->BitArray->Count - 1){
-			parent->Right = NewHuffNode(symbol->Character, SYMBOL_TYPE_CHARACTER, 0);
+			parent->Right = NewHuffNode(symbol->Character, (symbol->BitArray->Count == 0) ? SYMBOL_TYOE_EOF : SYMBOL_TYPE_CHARACTER, 0);
 			return;
 		}
-		else if (parent->Left == NULL){
+		else if (parent->Right == NULL){
 			parent->Right = NewHuffNode(BYTE_UNUSED, SYMBOL_TYPE_PARENT, 0);
 		}
 		else{
 			AddSymbolToTree(symbol, parent->Right, current_index + 1);
 		}
 	}
+}
+
+bool ValidateTree(HuffNode* node){
+	if (node->Type == SYMBOL_TYPE_PARENT){
+		if (node->Left == NULL || node->Right == NULL){
+			return False;
+		}
+		return ValidateTree(node->Left) && ValidateTree(node->Right);
+	}
+	if (node->Left == NULL && node->Right == NULL){
+		return True;
+	}
+	return False;
 }
