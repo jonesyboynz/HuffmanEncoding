@@ -10,7 +10,6 @@ FileInputStream* NewFileInputStream(FILE* file){
 }
 
 void DestoryFileInputStream(FileInputStream* stream){
-	fclose(stream->File);
 	Destroy(stream->Buffer);
 	free(stream);
 }
@@ -55,4 +54,5 @@ void GetNextBytes(FileInputStream* stream){
 	if (bytes_read == 0){
 		stream->EndOfFile = True;
 	}
+	stream->CurrentBit = 0;
 }

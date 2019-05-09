@@ -5,7 +5,7 @@
 
 void AddSymbolToTable(SymbolTable* table, HuffNode* node, BitArray* bitArray);
 
-void AddSymbolToTree(Symbol* symbol, HuffNode* parent, uint16_t current_index);
+void AddSymbolToTree(Symbol* symbol, HuffNode* parent, uint16_t current_index, bool is_eof);
 
 //Converts a heap to a tree.
 void GenerateTreeWithinHeap(HuffHeap* heap){
@@ -51,7 +51,7 @@ HuffNode* GenerateTreeFromTable(SymbolTable* table){
 	for (uint16_t i = 0; i < SYSTEM_SYMBOL_COUNT; i++)
 	{
 		if (table->Table[i] != NULL){
-			AddSymbolToTree(table->Table[i], root, 0);
+			AddSymbolToTree(table->Table[i], root, 0, (i == EOF_CHARACTER_VALUE) ? True : False);
 		}
 	}
 	return root;
@@ -86,28 +86,28 @@ void AddSymbolToTable(SymbolTable* table, HuffNode* node, BitArray* bitArray){
 }
 
 //Adds a symbol to the tree
-void AddSymbolToTree(Symbol* symbol, HuffNode* parent, uint16_t current_index){
+void AddSymbolToTree(Symbol* symbol, HuffNode* parent, uint16_t current_index, bool is_eof){
 	Bit current_bit = GetBit(symbol->BitArray, current_index);
 	if (current_bit == BIT0){
 		if (current_index == symbol->BitArray->Count - 1){
-			parent->Left = NewHuffNode(symbol->Character, (symbol->BitArray->Count == 0) ? SYMBOL_TYOE_EOF : SYMBOL_TYPE_CHARACTER, 0);
+			parent->Left = NewHuffNode(symbol->Character, (is_eof) ? SYMBOL_TYOE_EOF : SYMBOL_TYPE_CHARACTER, 0);
 			return;
 		}
 		else if (parent->Left == NULL){
 			parent->Left = NewHuffNode(BYTE_UNUSED, SYMBOL_TYPE_PARENT, 0);
 		}
-		AddSymbolToTree(symbol, parent->Left, current_index + 1);
+		AddSymbolToTree(symbol, parent->Left, current_index + 1, is_eof);
 	}
 	else{
 		if (current_index == symbol->BitArray->Count - 1){
-			parent->Right = NewHuffNode(symbol->Character, (symbol->BitArray->Count == 0) ? SYMBOL_TYOE_EOF : SYMBOL_TYPE_CHARACTER, 0);
+			parent->Right = NewHuffNode(symbol->Character, (is_eof) ? SYMBOL_TYOE_EOF : SYMBOL_TYPE_CHARACTER, 0);
 			return;
 		}
 		else if (parent->Right == NULL){
 			parent->Right = NewHuffNode(BYTE_UNUSED, SYMBOL_TYPE_PARENT, 0);
 		}
 		else{
-			AddSymbolToTree(symbol, parent->Right, current_index + 1);
+			AddSymbolToTree(symbol, parent->Right, current_index + 1, is_eof);
 		}
 	}
 }

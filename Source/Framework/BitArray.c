@@ -65,6 +65,7 @@ bool QuickPushByte(BitArray* bitArray, uint8_t byte){
 		return False;
 	}
 	bitArray->Bits[bitArray->Count / BITS_IN_BYTE] = byte;
+	bitArray->Count = ((bitArray->Count / BITS_IN_BYTE) + 1) * BITS_IN_BYTE;
 	return True;
 }
 
