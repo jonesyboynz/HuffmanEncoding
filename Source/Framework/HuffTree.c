@@ -106,9 +106,7 @@ void AddSymbolToTree(Symbol* symbol, HuffNode* parent, uint16_t current_index, b
 		else if (parent->Right == NULL){
 			parent->Right = NewHuffNode(BYTE_UNUSED, SYMBOL_TYPE_PARENT, 0);
 		}
-		else{
-			AddSymbolToTree(symbol, parent->Right, current_index + 1, is_eof);
-		}
+		AddSymbolToTree(symbol, parent->Right, current_index + 1, is_eof);
 	}
 }
 

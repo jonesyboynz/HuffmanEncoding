@@ -10,11 +10,11 @@ void Decode(FILE* inputFile, FileOutputStream* outputStream){
 
 	//Deserialize the symbol table.
 	SymbolTable* table = DeserializeSymbolTable(inputStream);
-	DISPLAY_SYMBOL_TABLE_DEF(table);
 
 	//Convert the symbol table to a decoding state machine.
 	HuffNode* tree = GenerateTreeFromTable(table);
 
+	//Validate the deocding state machine.
 	if (ValidateTree(tree) == False){
 		DecodingError("Invalid decoding state machine. Symbol table has been corrupted or file is not huffman encoded.");
 		return;
@@ -45,26 +45,25 @@ bool DecodeFie(FileInputStream* inputStream, FileOutputStream* outputStream, Huf
 		for (size_t index = inputStream->CurrentBit; index < inputStream->Buffer->Count; index++){
 
 			if (GetBit(inputStream->Buffer, index) == BIT0){
-				DISPLAY_MESSAGE("0", DISPLAY_OPTION_NO_NEWLINE);
+				//DISPLAY_MESSAGE("0", DISPLAY_OPTION_NO_NEWLINE);
 				current_node = current_node->Left;
 			}
 			else{
-				DISPLAY_MESSAGE("1", DISPLAY_OPTION_NO_NEWLINE);
+				//DISPLAY_MESSAGE("1", DISPLAY_OPTION_NO_NEWLINE);
 				current_node = current_node->Right;
 			}
 
 			if (current_node->Type == SYMBOL_TYPE_CHARACTER){
-				printf(" c:\"%c\"\n", current_node->Character);
+				//printf(" c:\"%c\"\n", current_node->Character);
 				PushByteToStream(outputStream, current_node->Character);
 				current_node = root;
 			}
 			else if (current_node->Type == SYMBOL_TYOE_EOF){
-				DISPLAY_MESSAGE_DEF("\nEOF");
+				//DISPLAY_MESSAGE_DEF("\nEOF");
 				eof_reached = True;
 				break;
 			}
 		}
-		DISPLAY_MESSAGE_DEF("Next bytes");
 		GetNextBytes(inputStream);
 	}
 
