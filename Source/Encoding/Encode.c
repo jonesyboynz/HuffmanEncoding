@@ -1,6 +1,7 @@
 #include "Encode.h"
 #include "CharacterFrequencies.h"
 #include "Serializer.h"
+#include "../Framework/FilePosition.h"
 
 #define FILE_INPUT_BUFFER_LENGTH 1024 * 32
 
@@ -45,11 +46,8 @@ void EncodeSymbolTable(FileOutputStream* outputStream, SymbolTable* table){
 void EncodeSymbolFile(FILE* inputFile, FileOutputStream* outputStream, SymbolTable* table){
 	uint8_t buffer[FILE_INPUT_BUFFER_LENGTH];
 
-	//TODO: move this elsewhere.
 	rewind(inputFile);
-	fseek(inputFile, 0L, SEEK_END);
-	uint32_t size = ftell(inputFile);
-	rewind(inputFile);
+	uint32_t size = FileLength(inputFile);
 
 	size_t read_bytes = fread(buffer, sizeof(uint8_t), FILE_INPUT_BUFFER_LENGTH, inputFile);
 	while(read_bytes > 0){
@@ -58,7 +56,7 @@ void EncodeSymbolFile(FILE* inputFile, FileOutputStream* outputStream, SymbolTab
 			PushBits(outputStream, table->Table[byte]->BitArray);
 		}
 		read_bytes = fread(buffer, sizeof(uint8_t), FILE_INPUT_BUFFER_LENGTH, inputFile);
-		printf("[%.8f%%] Encoded\n", (((float) ftell(inputFile)) * 100.0) / ((float) size));
+		printf("[%.8f%%] Encoded.\n", (((float) ftell(inputFile)) * 100.0) / ((float) size));
 	}
 
 	//Add the EOF character.

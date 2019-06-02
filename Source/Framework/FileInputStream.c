@@ -1,9 +1,11 @@
 #include "FileInputStream.h"
 
+#define FILE_INPUT_STREAM_BUFFER_SIZE 1024 * 32
+
 FileInputStream* NewFileInputStream(FILE* file){
 	FileInputStream* stream = malloc(sizeof(FileInputStream));
 	stream->File = file;
-	stream->Buffer = NewBitArray(FILE_STREAM_BUFFER_LENGTH * BITS_IN_BYTE);
+	stream->Buffer = NewBitArray(FILE_INPUT_STREAM_BUFFER_SIZE * BITS_IN_BYTE);
 	stream->EndOfFile = False;
 	stream->CurrentBit = 0;
 	return stream;
@@ -49,7 +51,7 @@ BitArray* ShiftBitsToArray(FileInputStream* stream, size_t bits){
 }
 
 void GetNextBytes(FileInputStream* stream){
-	size_t bytes_read = fread(stream->Buffer->Bits, sizeof(uint8_t), FILE_STREAM_BUFFER_LENGTH, stream->File);
+	size_t bytes_read = fread(stream->Buffer->Bits, sizeof(uint8_t), FILE_INPUT_STREAM_BUFFER_SIZE, stream->File);
 	stream->Buffer->Count = bytes_read * BITS_IN_BYTE;
 	if (bytes_read == 0){
 		stream->EndOfFile = True;

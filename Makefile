@@ -13,8 +13,8 @@ clean: clean_test clean_huff
 
 HUFF_FRAMEWORK_CORE_DEPS = Source/Framework/CoreTypes/Bool.h Source/Framework/CoreTypes/Bit.h Source/Framework/CoreTypes/Mode.h Source/Framework/CoreTypes/Frequency.h Source/Framework/Constants.h Source/Framework/CoreIncludes.h
 
-HUFF_FRAMEWORK_DEPS = Source/Framework/BitArray.h Source/Framework/Messages.h Source/Framework/HuffTreeNode.h Source/Framework/HuffTree.h Source/Framework/HuffNodeHeap.h Source/Framework/Symbol.h Source/Framework/SymbolTable.h Source/Framework/FileOutputStream.h Source/Framework/FileInputStream.h Source/Framework/ByteArray.h Source/Framework/Debug.h Source/Framework/Framework.h
-HUFF_FRAMEWORK_OBJ =  Source/Framework/BitArray.o Source/Framework/Messages.o Source/Framework/HuffTreeNode.o Source/Framework/HuffTree.o Source/Framework/HuffNodeHeap.o Source/Framework/Symbol.o Source/Framework/SymbolTable.o Source/Framework/FileOutputStream.o Source/Framework/FileInputStream.o Source/Framework/ByteArray.o Source/Framework/Debug.o
+HUFF_FRAMEWORK_DEPS = Source/Framework/BitArray.h Source/Framework/Messages.h Source/Framework/HuffTreeNode.h Source/Framework/HuffTree.h Source/Framework/HuffNodeHeap.h Source/Framework/Symbol.h Source/Framework/SymbolTable.h Source/Framework/FileOutputStream.h Source/Framework/FileInputStream.h Source/Framework/ByteArray.h Source/Framework/FilePosition.h Source/Framework/Debug.h Source/Framework/Framework.h
+HUFF_FRAMEWORK_OBJ =  Source/Framework/BitArray.o Source/Framework/Messages.o Source/Framework/HuffTreeNode.o Source/Framework/HuffTree.o Source/Framework/HuffNodeHeap.o Source/Framework/Symbol.o Source/Framework/SymbolTable.o Source/Framework/FileOutputStream.o Source/Framework/FileInputStream.o Source/Framework/ByteArray.o Source/Framework/FilePosition.o Source/Framework/Debug.o
 
 HUFF_ENCODING_DEPS = Source/Encoding/CharacterFrequencies.h Source/Encoding/Serializer.h Source/Encoding/Encode.h
 HUFF_ENCODING_OBJ = Source/Encoding/CharacterFrequencies.o Source/Encoding/Serializer.o Source/Encoding/Encode.o

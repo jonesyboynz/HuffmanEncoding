@@ -1,5 +1,6 @@
 #include "Decode.h"
 #include "Deserializer.h"
+#include "../Framework/FilePosition.h"
 
 bool DecodeFie();
 
@@ -41,15 +42,15 @@ bool DecodeFie(FileInputStream* inputStream, FileOutputStream* outputStream, Huf
 	bool eof_reached = False;
 	HuffNode* current_node = root;
 
+	uint32_t size = FileLength(inputStream->File);
+
 	while (inputStream->EndOfFile == False){
 		for (size_t index = inputStream->CurrentBit; index < inputStream->Buffer->Count; index++){
 
 			if (GetBit(inputStream->Buffer, index) == BIT0){
-				//DISPLAY_MESSAGE("0", DISPLAY_OPTION_NO_NEWLINE);
 				current_node = current_node->Left;
 			}
 			else{
-				//DISPLAY_MESSAGE("1", DISPLAY_OPTION_NO_NEWLINE);
 				current_node = current_node->Right;
 			}
 
@@ -59,11 +60,11 @@ bool DecodeFie(FileInputStream* inputStream, FileOutputStream* outputStream, Huf
 				current_node = root;
 			}
 			else if (current_node->Type == SYMBOL_TYOE_EOF){
-				//DISPLAY_MESSAGE_DEF("\nEOF");
 				eof_reached = True;
 				break;
 			}
 		}
+		printf("[%.8f%%] Decoded.\n", (((float) ftell(inputStream->File)) * 100.0) / ((float) size));
 		GetNextBytes(inputStream);
 	}
 
