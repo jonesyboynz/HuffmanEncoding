@@ -15,13 +15,16 @@ char* GenerateFilename(char* baseName, Mode mode){
 	size_t baseNameLength = strnlen(baseName, 1024);
 	strncpy(buffer, baseName, baseNameLength);
 	if (mode == MODE_ENCODE){
-		strncpy(buffer, ".encoded", 1024 - baseNameLength);
-	}
+		strncpy(buffer + baseNameLength, ".encoded", 1024 - baseNameLength);
+	}	
 	else{
-		strncpy(buffer, ".decoded", 1024 - baseNameLength);
+		strncpy(buffer + baseNameLength, ".decoded", 1024 - baseNameLength);
 	}
 	
 	buffer[MAX_ARGUMENT_LENGTH - 1] = 0x00; //Ensure null termination.
+
+	printf("Generated output filename: %s\n", buffer);
+
 	return buffer;
 }
 
@@ -54,6 +57,7 @@ int main(int argc, char **argv){
 	FILE* output;
 	char* inputFilename;
 	char* outputFilename;
+	char* generatedFilename = NULL;
 	FileOutputStream* outputStream;
 
 	if (argc < 3 || argc > 4){
@@ -83,9 +87,8 @@ int main(int argc, char **argv){
 		output = fopen(outputFilename, "wb");
 	}
 	else{
-		char* generatedFilename = GenerateFilename(inputFilename, mode);
+		generatedFilename = GenerateFilename(inputFilename, mode);
 		output = fopen(generatedFilename, "wb");
-		free(generatedFilename);
 	}
 
 	//Check the output file.
@@ -110,6 +113,10 @@ int main(int argc, char **argv){
 	//Cleanup
 	DestroyFileOutputStream(outputStream);
 	fclose(input);
+
+	if (generatedFilename != NULL){
+		free(generatedFilename);
+	}
 
 	return EXIT_SUCCESS;
 }
